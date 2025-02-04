@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { type VisionPlan } from "@/utils/coreValues";
 import { generateAIVision } from "@/utils/visionAI";
-import { Loader2 } from "lucide-react";
-import DreamsInput from "./vision/DreamsInput";
 import VisionPlanDisplay from "./vision/VisionPlanDisplay";
+import VisionInputSection from "./vision/VisionInputSection";
 
 interface VisionPlannerProps {
   selectedAreas: string[];
@@ -91,30 +89,13 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <DreamsInput
-        value={personalDreams}
-        onChange={handleDreamsChange}
-        maxLength={MAX_DREAMS_LENGTH}
-      />
-
-      <div className="mt-8 text-center">
-        <Button
-          onClick={generatePlan}
-          disabled={!personalDreams.trim() || isGenerating}
-          className="bg-primary hover:bg-primary/90"
-        >
-          {isGenerating ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Generating Your Vision Plan...
-            </>
-          ) : (
-            'Generate Your Vision Plan'
-          )}
-        </Button>
-      </div>
-    </div>
+    <VisionInputSection
+      personalDreams={personalDreams}
+      onChange={handleDreamsChange}
+      onGenerate={generatePlan}
+      isGenerating={isGenerating}
+      maxLength={MAX_DREAMS_LENGTH}
+    />
   );
 };
 
