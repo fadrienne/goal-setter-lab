@@ -22,6 +22,9 @@ export const generateAIVision = async (input: VisionInput) => {
         selectedAreas: input.selectedAreas,
         coreValues: input.coreValues,
         personalDreams: input.personalDreams
+      },
+      headers: {
+        Authorization: `Bearer ${supabaseAnonKey}`
       }
     });
 
