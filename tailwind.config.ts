@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -29,7 +32,7 @@ export default {
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#4A90E2",
+          DEFAULT: "#8E9196",
           foreground: "#ffffff",
         },
         accent: {
