@@ -1,97 +1,61 @@
-import { useState } from "react";
-import GoalFramework from "./GoalFramework";
-import CoreValuesSelector from "./vision/CoreValuesSelector";
-import VisionPlanner from "./VisionPlanner";
-import PersonalityProfile from "./profile/PersonalityProfile";
-import DevelopmentAreasSelector from "./vision/DevelopmentAreasSelector";
-import { Button } from "./ui/button";
+import { Card } from "@/components/ui/card";
+
+interface TraitScore {
+  trait: string;
+  score: number;
+}
 
 interface ResultsDisplayProps {
-  traitScores: {
-    trait: string;
-    score: number;
-  }[];
-  dominantTrait: {
-    trait: string;
-    score: number;
-  };
+  traitScores: TraitScore[];
+  dominantTrait: TraitScore;
 }
 
 const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => {
-  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [showPersonalVision, setShowPersonalVision] = useState(false);
-  const [showVisionPlanner, setShowVisionPlanner] = useState(false);
-
-  const handleAreaSelection = (area: string) => {
-    setSelectedAreas(prev => {
-      if (prev.includes(area)) {
-        return prev.filter(a => a !== area);
-      }
-      return [...prev, area];
-    });
-  };
-
-  const handleContinue = () => {
-    setShowVisionPlanner(true);
-  };
-
-  const handleValueSelection = (value: string) => {
-    setSelectedValues(prev => {
-      if (prev.includes(value)) {
-        return prev.filter(v => v !== value);
-      }
-      if (prev.length >= 3) {
-        return prev;
-      }
-      return [...prev, value];
-    });
+  const getTraitDescription = (trait: string) => {
+    const descriptions: Record<string, string> = {
+      extraversion: "Tendency to seek stimulation in the company of others",
+      agreeableness: "Tendency to be compassionate and cooperative",
+      conscientiousness: "Tendency to show self-discipline and aim for achievement",
+      neuroticism: "Tendency to experience unpleasant emotions easily",
+      openness: "Tendency to be open to experiencing a variety of activities",
+    };
+    return descriptions[trait] || trait;
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
-      <PersonalityProfile 
-        dominantTrait={dominantTrait} 
-        traitScores={traitScores} 
-      />
-
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-center mb-6">Your Personal Development Framework</h2>
-        <GoalFramework trait={dominantTrait.trait} />
+    <div className="space-y-8 text-center">
+      <Card className="p-6 bg-white shadow-lg">
+        <h2 className="text-2xl font-bold text-primary mb-4">Your Personality Profile</h2>
+        <p className="text-lg mb-6">
+          Your dominant trait is{" "}
+          <span className="font-bold text-primary">
+            {dominantTrait.trait.charAt(0).toUpperCase() + dominantTrait.trait.slice(1)}
+          </span>{" "}
+          with a score of {dominantTrait.score}
+        </p>
         
-        <div className="mt-12">
-          <CoreValuesSelector
-            selectedValues={selectedValues}
-            onValueSelection={handleValueSelection}
-          />
-          
-          <div className="mt-8 text-center">
-            <Button 
-              onClick={() => setShowPersonalVision(true)}
-              className="bg-primary hover:bg-primary/90"
-              disabled={selectedValues.length !== 3}
-            >
-              Choose Visioning Areas
-            </Button>
-          </div>
+        <div className="space-y-4">
+          {traitScores.map((traitScore) => (
+            <div key={traitScore.trait} className="text-center">
+              <h3 className="font-semibold text-lg capitalize">
+                {traitScore.trait}
+              </h3>
+              <p className="text-gray-600 mb-2">
+                {getTraitDescription(traitScore.trait)}
+              </p>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-primary h-2.5 rounded-full"
+                  style={{ width: `${(traitScore.score / 5) * 100}%` }}
+                ></div>
+              </div>
+              <p className="mt-1 text-sm text-gray-500">
+                Score: {traitScore.score}
+              </p>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {showPersonalVision && (
-        <DevelopmentAreasSelector
-          selectedAreas={selectedAreas}
-          onAreaSelection={handleAreaSelection}
-          onContinue={handleContinue}
-        />
-      )}
-
-      {showVisionPlanner && (
-        <VisionPlanner
-          selectedAreas={selectedAreas}
-          dominantTrait={dominantTrait}
-          selectedValues={selectedValues}
-        />
-      )}
+      </Card>
     </div>
   );
 };
