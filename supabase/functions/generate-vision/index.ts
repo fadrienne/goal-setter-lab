@@ -8,13 +8,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface VisionInput {
-  personalityTrait: string;
-  selectedAreas: string[];
-  coreValues: string[];
-  personalDreams: string;
-}
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -23,7 +16,7 @@ serve(async (req) => {
 
   try {
     console.log('Received request:', req.method);
-    const input: VisionInput = await req.json();
+    const input = await req.json();
     console.log('Processing input:', input);
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -33,7 +26,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         messages: [
           {
             role: 'system',
