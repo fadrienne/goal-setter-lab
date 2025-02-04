@@ -36,18 +36,18 @@ serve(async (req) => {
       "- Personal dreams: " + input.personalDreams + "\n\n" +
       "Provide the response in the following JSON structure:\n" +
       "{\n" +
-      "  \"smartGoal\": {\n" +
-      "    \"specific\": \"string\",\n" +
-      "    \"measurable\": \"string\",\n" +
-      "    \"achievable\": \"string\",\n" +
-      "    \"relevant\": \"string\",\n" +
-      "    \"timeBound\": \"string\"\n" +
+      '  "smartGoal": {\n' +
+      '    "specific": "string",\n' +
+      '    "measurable": "string",\n' +
+      '    "achievable": "string",\n' +
+      '    "relevant": "string",\n' +
+      '    "timeBound": "string"\n' +
       "  },\n" +
-      "  \"fiveYearVision\": \"string\",\n" +
-      "  \"yearlyMilestones\": [\n" +
+      '  "fiveYearVision": "string",\n' +
+      '  "yearlyMilestones": [\n' +
       "    {\n" +
-      "      \"year\": \"number\",\n" +
-      "      \"goals\": [\"string\"]\n" +
+      '      "year": 1,\n' +
+      '      "goals": ["string"]\n' +
       "    }\n" +
       "  ]\n" +
       "}";
@@ -60,7 +60,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [
           {
             role: 'system',
@@ -72,6 +72,7 @@ serve(async (req) => {
           }
         ],
         temperature: 0.7,
+        response_format: { type: "json_object" }
       }),
     });
 
@@ -84,7 +85,7 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('OpenAI response received successfully');
+    console.log('OpenAI response received:', data);
 
     if (!data.choices?.[0]?.message?.content) {
       console.error('Invalid response format from OpenAI:', data);
@@ -93,7 +94,7 @@ serve(async (req) => {
 
     try {
       const visionPlan = JSON.parse(data.choices[0].message.content);
-      console.log('Vision plan parsed successfully');
+      console.log('Vision plan parsed successfully:', visionPlan);
       return new Response(JSON.stringify(visionPlan), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
