@@ -10,17 +10,16 @@ console.log('Supabase Anon Key exists:', !!supabaseAnonKey);
 let supabase;
 try {
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables. Please connect your Supabase project in the settings.');
+    throw new Error('Missing Supabase environment variables');
   }
   supabase = createClient(supabaseUrl, supabaseAnonKey);
   console.log('Supabase client created successfully');
 } catch (error) {
   console.error('Error creating Supabase client:', error);
-  // Create a dummy client that will show appropriate errors to users
   supabase = {
     functions: {
       invoke: async () => {
-        throw new Error('Supabase is not properly configured. Please connect your Supabase project in the settings.');
+        throw new Error('Supabase is not properly configured');
       }
     }
   };
@@ -43,7 +42,16 @@ export const generateAIVision = async (input: VisionInput) => {
 
     if (error) {
       console.error('Error generating vision:', error);
+      if (error.message?.includes('Function not found')) {
+        throw new Error(
+          'The generate-vision Edge Function is not deployed. Please deploy the Edge Function in your Supabase dashboard and ensure the OPENAI_API_KEY secret is set.'
+        );
+      }
       throw error;
+    }
+
+    if (!data) {
+      throw new Error('No data received from the Edge Function. Please check your Edge Function implementation.');
     }
 
     console.log('Successfully generated vision plan:', data);
