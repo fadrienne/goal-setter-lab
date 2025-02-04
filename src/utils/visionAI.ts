@@ -17,7 +17,12 @@ export const generateAIVision = async (input: VisionInput) => {
     console.log('Calling Edge Function with input:', input);
     
     const { data, error } = await supabase.functions.invoke('generate-vision', {
-      body: JSON.stringify(input)
+      body: {
+        personalityTrait: input.personalityTrait,
+        selectedAreas: input.selectedAreas,
+        coreValues: input.coreValues,
+        personalDreams: input.personalDreams
+      }
     });
 
     if (error) {
