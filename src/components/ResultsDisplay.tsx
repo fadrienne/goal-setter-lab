@@ -1,6 +1,5 @@
 import { useState } from "react";
 import GoalFramework from "./GoalFramework";
-import ApiKeyInput from "./ApiKeyInput";
 import CoreValuesSelector from "./vision/CoreValuesSelector";
 import VisionPlanner from "./VisionPlanner";
 import PersonalityProfile from "./profile/PersonalityProfile";
@@ -23,7 +22,6 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [showPersonalVision, setShowPersonalVision] = useState(false);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(() => !!localStorage.getItem('OPENAI_API_KEY'));
 
   const handleAreaSelection = (area: string) => {
     setSelectedAreas(prev => {
@@ -36,10 +34,6 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
 
   const handleContinue = () => {
     setShowVisionPlanner(true);
-  };
-
-  const handleApiKeySaved = () => {
-    setHasApiKey(true);
   };
 
   const handleValueSelection = (value: string) => {
@@ -92,16 +86,11 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
       )}
 
       {showVisionPlanner && (
-        <>
-          {!hasApiKey && <ApiKeyInput onApiKeySaved={handleApiKeySaved} />}
-          {hasApiKey && (
-            <VisionPlanner
-              selectedAreas={selectedAreas}
-              dominantTrait={dominantTrait}
-              selectedValues={selectedValues}
-            />
-          )}
-        </>
+        <VisionPlanner
+          selectedAreas={selectedAreas}
+          dominantTrait={dominantTrait}
+          selectedValues={selectedValues}
+        />
       )}
     </div>
   );

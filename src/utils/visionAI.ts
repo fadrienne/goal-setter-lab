@@ -7,19 +7,14 @@ interface VisionInput {
 
 export const generateAIVision = async (input: VisionInput) => {
   try {
-    const apiKey = localStorage.getItem('OPENAI_API_KEY');
-    if (!apiKey) {
-      throw new Error('OpenAI API key not found');
-    }
-
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',  // Updated to use GPT-3.5-turbo which is more widely available
+        model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
