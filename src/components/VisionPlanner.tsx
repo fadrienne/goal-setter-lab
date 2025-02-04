@@ -48,6 +48,13 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
     }
 
     setIsGenerating(true);
+    console.log("Starting vision plan generation with:", {
+      personalityTrait: dominantTrait.trait,
+      selectedAreas,
+      selectedValues,
+      personalDreams
+    });
+
     try {
       const aiVision = await generateAIVision({
         personalityTrait: dominantTrait.trait,
@@ -56,8 +63,14 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
         personalDreams
       });
       
+      console.log("Received vision plan:", aiVision);
       setVisionPlan(aiVision);
+      toast({
+        title: "Vision Plan Generated",
+        description: "Your personalized vision plan has been created successfully!"
+      });
     } catch (error) {
+      console.error("Error generating vision plan:", error);
       toast({
         variant: "destructive",
         title: "Error generating vision plan",
