@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { coreValues, generateVisionPlan, type VisionPlan } from "@/utils/coreValues";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { coreValues, type VisionPlan } from "@/utils/coreValues";
 import { personalityGoals } from "@/utils/personalityGoals";
+import { generateAIVision } from "@/utils/visionAI";
+import { Loader2 } from "lucide-react";
 
 interface VisionPlannerProps {
   selectedAreas: string[];
@@ -15,7 +19,10 @@ interface VisionPlannerProps {
 
 const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
 
   const handleValueSelection = (value: string) => {
     setSelectedValues(prev => {
@@ -29,60 +36,99 @@ const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => 
     });
   };
 
-  const generatePlan = () => {
+  const generatePlan = async () => {
     const framework = personalityGoals.find(g => g.trait === dominantTrait.trait);
     if (!framework) return;
 
-    const plan = generateVisionPlan(
-      selectedAreas,
-      dominantTrait.trait,
-      framework.longTermStrategies,
-      framework.developmentAreas,
-      selectedValues
-    );
-    setVisionPlan(plan);
+    setIsGenerating(true);
+    try {
+      const aiVision = await generateAIVision({
+        personalityTrait: dominantTrait.trait,
+        selectedAreas,
+        coreValues: selectedValues,
+        personalDreams
+      });
+      
+      setVisionPlan(aiVision);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error generating vision plan",
+        description: "Please try again or contact support if the problem persists."
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
     <div className="space-y-8 animate-fade-in">
       {!visionPlan ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Select Your Core Values</CardTitle>
-            <CardDescription>
-              Choose 3 values that resonate most with your personal and professional aspirations.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {coreValues.map((value) => (
-                <div key={value} className="flex items-center space-x-3 p-4 border rounded-lg">
-                  <Checkbox
-                    id={value}
-                    checked={selectedValues.includes(value)}
-                    onCheckedChange={() => handleValueSelection(value)}
-                    disabled={selectedValues.length >= 3 && !selectedValues.includes(value)}
-                  />
-                  <label
-                    htmlFor={value}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {value}
-                  </label>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8 text-center">
-              <Button
-                onClick={generatePlan}
-                disabled={selectedValues.length !== 3}
-                className="bg-primary hover:bg-primary/90"
-              >
-                Generate Your Vision Plan
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Select Your Core Values</CardTitle>
+              <CardDescription>
+                Choose 3 values that resonate most with your personal and professional aspirations.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {coreValues.map((value) => (
+                  <div key={value} className="flex items-center space-x-3 p-4 border rounded-lg">
+                    <Checkbox
+                      id={value}
+                      checked={selectedValues.includes(value)}
+                      onCheckedChange={() => handleValueSelection(value)}
+                      disabled={selectedValues.length >= 3 && !selectedValues.includes(value)}
+                    />
+                    <label
+                      htmlFor={value}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Share Your Dreams</CardTitle>
+              <CardDescription>
+                Tell us about your aspirations, dreams, and what you envision for your future. 
+                This will help create a more personalized vision plan.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                placeholder="Describe your dreams and aspirations..."
+                value={personalDreams}
+                onChange={(e) => setPersonalDreams(e.target.value)}
+                className="min-h-[200px]"
+              />
+            </CardContent>
+          </Card>
+
+          <div className="mt-8 text-center">
+            <Button
+              onClick={generatePlan}
+              disabled={selectedValues.length !== 3 || !personalDreams.trim() || isGenerating}
+              className="bg-primary hover:bg-primary/90"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generating Your Vision Plan...
+                </>
+              ) : (
+                'Generate Your Vision Plan'
+              )}
+            </Button>
+          </div>
+        </div>
       ) : (
         <div className="space-y-8">
           <Card>

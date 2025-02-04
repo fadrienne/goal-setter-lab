@@ -5,6 +5,7 @@ import GoalFramework from "./GoalFramework";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import VisionPlanner from "./VisionPlanner";
+import ApiKeyInput from "./ApiKeyInput";
 
 interface ResultsDisplayProps {
   traitScores: {
@@ -21,6 +22,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
   const [showGoalSelection, setShowGoalSelection] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(() => !!localStorage.getItem('OPENAI_API_KEY'));
 
   const developmentAreas = [
     "Career Growth",
@@ -122,10 +124,15 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
       )}
 
       {showVisionPlanner && (
-        <VisionPlanner
-          selectedAreas={selectedAreas}
-          dominantTrait={dominantTrait}
-        />
+        <>
+          {!hasApiKey && <ApiKeyInput />}
+          {hasApiKey && (
+            <VisionPlanner
+              selectedAreas={selectedAreas}
+              dominantTrait={dominantTrait}
+            />
+          )}
+        </>
       )}
     </div>
   );
