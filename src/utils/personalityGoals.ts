@@ -1,4 +1,4 @@
-interface GoalFramework {
+interface PersonalityGoal {
   trait: string;
   title: string;
   description: string;
@@ -7,135 +7,105 @@ interface GoalFramework {
   developmentAreas: string[];
 }
 
-export const personalityGoals: GoalFramework[] = [
+export const personalityGoals: PersonalityGoal[] = [
   {
     trait: "extraversion",
-    title: "Social Impact & Leadership Path",
-    description: "Leverage your natural social energy and leadership potential to create meaningful connections and influence positive change.",
+    title: "Social Impact & Leadership Development",
+    description: "Leverage your natural social energy to build connections and lead others.",
     shortTermGoals: [
-      "Join or start a community group in your area of interest",
-      "Practice public speaking through local events or clubs",
-      "Initiate conversations with new people daily"
+      "Join or lead a professional networking group",
+      "Take on speaking opportunities",
+      "Mentor junior colleagues"
     ],
     longTermStrategies: [
-      "Develop leadership skills through mentorship programs",
-      "Build a network in your professional field",
-      "Create platforms for social interaction and community building",
-      "Establish yourself as a thought leader in your industry",
-      "Launch community initiatives that bring people together",
-      "Create and lead professional development workshops"
+      "Build a strong professional network",
+      "Develop leadership presence",
+      "Create collaborative initiatives"
     ],
     developmentAreas: [
       "Active listening skills",
       "One-on-one relationship building",
-      "Balancing social energy with quiet reflection",
-      "Emotional intelligence in group dynamics",
-      "Strategic networking abilities",
-      "Mindful communication practices"
+      "Strategic influence"
     ]
   },
   {
     trait: "agreeableness",
-    title: "Community Building & Support Framework",
-    description: "Channel your natural empathy and cooperation skills to foster harmony and support in your community.",
+    title: "Collaborative Growth & Team Harmony",
+    description: "Use your empathy and cooperation skills to build strong relationships and foster team success.",
     shortTermGoals: [
-      "Volunteer for local charitable organizations",
-      "Mediate conflicts in your personal or professional life",
-      "Practice setting healthy boundaries while maintaining relationships"
+      "Facilitate team building activities",
+      "Mediate conflicts constructively",
+      "Create inclusive team environments"
     ],
     longTermStrategies: [
-      "Develop counseling or mentoring skills",
-      "Create support systems in your community",
-      "Build collaborative projects that benefit others",
-      "Establish conflict resolution programs",
-      "Create inclusive community initiatives",
-      "Develop leadership roles in humanitarian projects"
+      "Develop conflict resolution expertise",
+      "Build consensus-driven leadership skills",
+      "Foster psychological safety in teams"
     ],
     developmentAreas: [
-      "Assertiveness in challenging situations",
-      "Self-advocacy skills",
-      "Balance between helping others and self-care",
-      "Boundary setting and maintenance",
-      "Strategic decision-making",
-      "Professional negotiation techniques"
+      "Assertiveness in communication",
+      "Setting healthy boundaries",
+      "Decision-making confidence"
     ]
   },
   {
     trait: "conscientiousness",
-    title: "Achievement & Organization Blueprint",
-    description: "Utilize your natural planning and detail-oriented abilities to create structured paths to success.",
+    title: "Strategic Excellence & Process Optimization",
+    description: "Channel your detail-oriented nature into achieving high-quality results and improving systems.",
     shortTermGoals: [
-      "Create detailed action plans for your projects",
-      "Implement productivity systems",
-      "Set and track measurable goals weekly"
+      "Implement personal productivity systems",
+      "Create detailed action plans",
+      "Establish quality control measures"
     ],
     longTermStrategies: [
       "Develop project management expertise",
-      "Create systems for continuous improvement",
-      "Build a reputation for reliability and excellence",
-      "Establish quality control methodologies",
-      "Create scalable organizational systems",
-      "Develop leadership in process optimization"
+      "Build systems thinking capabilities",
+      "Master time management"
     ],
     developmentAreas: [
-      "Flexibility in unexpected situations",
-      "Delegating tasks to others",
-      "Balancing perfectionism with efficiency",
-      "Adaptability to change",
-      "Creative problem-solving",
-      "Team collaboration skills"
+      "Flexibility in approaches",
+      "Delegating effectively",
+      "Managing perfectionism"
     ]
   },
   {
     trait: "neuroticism",
-    title: "Emotional Intelligence & Resilience Path",
-    description: "Transform your emotional sensitivity into emotional intelligence and develop strong coping mechanisms.",
+    title: "Emotional Intelligence & Resilience Building",
+    description: "Transform emotional sensitivity into emotional intelligence and build stress management skills.",
     shortTermGoals: [
-      "Practice daily mindfulness or meditation",
-      "Keep an emotion journal",
-      "Learn stress management techniques"
+      "Practice daily mindfulness",
+      "Develop stress management techniques",
+      "Build emotional awareness"
     ],
     longTermStrategies: [
-      "Develop emotional awareness and regulation skills",
-      "Build resilience through gradual exposure to challenges",
-      "Create support systems for emotional well-being",
-      "Master advanced stress management techniques",
-      "Develop professional emotional intelligence training",
-      "Create personal growth workshops"
+      "Master emotional regulation",
+      "Develop resilience practices",
+      "Build strong support systems"
     ],
     developmentAreas: [
-      "Stress management",
+      "Stress tolerance",
       "Positive self-talk",
-      "Building emotional resilience",
-      "Anxiety management techniques",
-      "Professional boundary setting",
-      "Crisis management skills"
+      "Work-life balance"
     ]
   },
   {
     trait: "openness",
-    title: "Innovation & Creative Expression Framework",
-    description: "Harness your natural curiosity and creativity to explore new possibilities and generate innovative solutions.",
+    title: "Innovation & Creative Leadership",
+    description: "Harness your creativity and curiosity to drive innovation and explore new possibilities.",
     shortTermGoals: [
-      "Learn a new skill or hobby monthly",
-      "Explore different cultural perspectives",
-      "Start a creative project"
+      "Explore new methodologies",
+      "Lead innovation initiatives",
+      "Develop creative problem-solving skills"
     ],
     longTermStrategies: [
-      "Develop expertise in multiple domains",
-      "Create innovative solutions to complex problems",
-      "Build bridges between different fields or communities",
-      "Establish creative thinking workshops",
-      "Develop cross-cultural collaboration initiatives",
-      "Create platforms for innovative idea exchange"
+      "Build innovation frameworks",
+      "Develop thought leadership",
+      "Create learning cultures"
     ],
     developmentAreas: [
-      "Following through on projects",
-      "Practical application of ideas",
-      "Balancing exploration with focus",
-      "Project management skills",
-      "Strategic implementation of ideas",
-      "Time management for creative work"
+      "Implementation focus",
+      "Practical application",
+      "Structure and routine"
     ]
   }
 ];

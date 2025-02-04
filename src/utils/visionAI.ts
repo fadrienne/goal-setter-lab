@@ -1,4 +1,5 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from "@/integrations/supabase/client";
+import { VisionPlan } from "./coreValues";
 
 interface VisionInput {
   personalityTrait: string;
@@ -7,28 +8,16 @@ interface VisionInput {
   personalDreams: string;
 }
 
-export const generateAIVision = async (input: VisionInput) => {
+export const generateAIVision = async (input: VisionInput): Promise<VisionPlan> => {
   try {
-    console.log('Input to Edge Function:', input);
-    
     const { data, error } = await supabase.functions.invoke('generate-vision', {
       body: input
     });
 
-    if (error) {
-      console.error('Edge Function Error:', error);
-      throw new Error(`Edge Function error: ${error.message}`);
-    }
-
-    if (!data) {
-      console.error('No data received from Edge Function');
-      throw new Error('No data received from the Edge Function');
-    }
-
-    console.log('Edge Function Response:', data);
+    if (error) throw error;
     return data;
   } catch (error) {
-    console.error('Error in generateAIVision:', error);
+    console.error('Error generating vision plan:', error);
     throw error;
   }
 };
