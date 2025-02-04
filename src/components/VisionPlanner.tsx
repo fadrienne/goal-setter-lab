@@ -4,12 +4,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { type VisionPlan } from "@/utils/coreValues";
 import { generateAIVision } from "@/utils/visionAI";
 import { Loader2 } from "lucide-react";
-import CoreValuesSelector from "./vision/CoreValuesSelector";
 import DreamsInput from "./vision/DreamsInput";
 import VisionPlanDisplay from "./vision/VisionPlanDisplay";
 
 interface VisionPlannerProps {
   selectedAreas: string[];
+  selectedValues: string[];
   dominantTrait: {
     trait: string;
     score: number;
@@ -18,24 +18,11 @@ interface VisionPlannerProps {
 
 const MAX_DREAMS_LENGTH = 2000;
 
-const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionPlannerProps) => {
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
-
-  const handleValueSelection = (value: string) => {
-    setSelectedValues(prev => {
-      if (prev.includes(value)) {
-        return prev.filter(v => v !== value);
-      }
-      if (prev.length >= 3) {
-        return prev;
-      }
-      return [...prev, value];
-    });
-  };
 
   const handleDreamsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
@@ -97,16 +84,11 @@ const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => 
         onChange={handleDreamsChange}
         maxLength={MAX_DREAMS_LENGTH}
       />
-      
-      <CoreValuesSelector
-        selectedValues={selectedValues}
-        onValueSelection={handleValueSelection}
-      />
 
       <div className="mt-8 text-center">
         <Button
           onClick={generatePlan}
-          disabled={selectedValues.length !== 3 || !personalDreams.trim() || isGenerating}
+          disabled={!personalDreams.trim() || isGenerating}
           className="bg-primary hover:bg-primary/90"
         >
           {isGenerating ? (

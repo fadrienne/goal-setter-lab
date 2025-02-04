@@ -6,6 +6,8 @@ import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import VisionPlanner from "./VisionPlanner";
 import ApiKeyInput from "./ApiKeyInput";
+import CoreValuesSelector from "./vision/CoreValuesSelector";
+import { type VisionPlan } from "@/utils/coreValues";
 
 interface ResultsDisplayProps {
   traitScores: {
@@ -22,6 +24,8 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
   const [showGoalSelection, setShowGoalSelection] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [showPersonalVision, setShowPersonalVision] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(() => !!localStorage.getItem('OPENAI_API_KEY'));
 
   const developmentAreas = [
@@ -52,6 +56,18 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
     setHasApiKey(true);
   };
 
+  const handleValueSelection = (value: string) => {
+    setSelectedValues(prev => {
+      if (prev.includes(value)) {
+        return prev.filter(v => v !== value);
+      }
+      if (prev.length >= 3) {
+        return prev;
+      }
+      return [...prev, value];
+    });
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-8">
       <Card className="animate-fade-in">
@@ -80,17 +96,25 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
         <h2 className="text-2xl font-semibold text-center mb-6">Your Personal Development Framework</h2>
         <GoalFramework trait={dominantTrait.trait} />
         
-        <div className="mt-12 text-center">
-          <Button 
-            onClick={() => setShowGoalSelection(true)}
-            className="bg-primary hover:bg-primary/90"
-          >
-            Create Your Personal Vision
-          </Button>
+        <div className="mt-12">
+          <CoreValuesSelector
+            selectedValues={selectedValues}
+            onValueSelection={handleValueSelection}
+          />
+          
+          <div className="mt-8 text-center">
+            <Button 
+              onClick={() => setShowPersonalVision(true)}
+              className="bg-primary hover:bg-primary/90"
+              disabled={selectedValues.length !== 3}
+            >
+              Create Your Personal Vision
+            </Button>
+          </div>
         </div>
       </div>
 
-      {showGoalSelection && !showVisionPlanner && (
+      {showPersonalVision && (
         <Card className="mt-8 p-8 animate-fade-in">
           <h2 className="text-2xl font-semibold text-center mb-6">Select Areas for Goal Setting</h2>
           <p className="text-center text-secondary mb-8">
@@ -134,6 +158,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
             <VisionPlanner
               selectedAreas={selectedAreas}
               dominantTrait={dominantTrait}
+              selectedValues={selectedValues}
             />
           )}
         </>
