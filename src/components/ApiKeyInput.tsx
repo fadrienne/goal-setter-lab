@@ -4,7 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-const ApiKeyInput = () => {
+interface ApiKeyInputProps {
+  onApiKeySaved: () => void;
+}
+
+const ApiKeyInput = ({ onApiKeySaved }: ApiKeyInputProps) => {
   const [apiKey, setApiKey] = useState("");
   const { toast } = useToast();
 
@@ -23,6 +27,7 @@ const ApiKeyInput = () => {
       title: "API Key Saved",
       description: "Your OpenAI API key has been saved for this session."
     });
+    onApiKeySaved();
   };
 
   return (

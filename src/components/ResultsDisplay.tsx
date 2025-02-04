@@ -48,6 +48,10 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
     setShowVisionPlanner(true);
   };
 
+  const handleApiKeySaved = () => {
+    setHasApiKey(true);
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-8">
       <Card className="animate-fade-in">
@@ -125,7 +129,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
 
       {showVisionPlanner && (
         <>
-          {!hasApiKey && <ApiKeyInput />}
+          {!hasApiKey && <ApiKeyInput onApiKeySaved={handleApiKeySaved} />}
           {hasApiKey && (
             <VisionPlanner
               selectedAreas={selectedAreas}
