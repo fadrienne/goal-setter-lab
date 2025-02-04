@@ -1,24 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = 'https://ykxcvvfvqxjvvjwqvvxm.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlreGN2dmZ2cXhqdnZqd3F2dnhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY5NzI2NzAsImV4cCI6MjAyMjU0ODY3MH0.qwpEAXEXD_YZHDZPVbI4v8h6KLhZEQsZQQf_vGZVVtY';
 
-let supabase;
-try {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables');
-  }
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
-} catch (error) {
-  console.error('Error creating Supabase client:', error);
-  supabase = {
-    functions: {
-      invoke: async () => {
-        throw new Error('Supabase is not properly configured');
-      }
-    }
-  };
-}
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface VisionInput {
   personalityTrait: string;
@@ -34,6 +19,7 @@ export const generateAIVision = async (input: VisionInput) => {
     });
 
     if (error) {
+      console.error('Error from Edge Function:', error);
       throw error;
     }
 
