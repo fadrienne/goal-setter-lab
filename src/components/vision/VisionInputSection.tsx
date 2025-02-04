@@ -4,7 +4,7 @@ import DreamsInput from "./DreamsInput";
 
 interface VisionInputSectionProps {
   personalDreams: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onGenerate: () => void;
   isGenerating: boolean;
   maxLength: number;
