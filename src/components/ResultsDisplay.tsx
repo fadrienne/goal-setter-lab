@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useState } from "react";
 import GoalFramework from "./GoalFramework";
+import { Button } from "./ui/button";
+import { Checkbox } from "./ui/checkbox";
 
 interface ResultsDisplayProps {
   traitScores: {
@@ -14,6 +17,29 @@ interface ResultsDisplayProps {
 }
 
 const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => {
+  const [showGoalSelection, setShowGoalSelection] = useState(false);
+  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
+
+  const developmentAreas = [
+    "Career Growth",
+    "Personal Development",
+    "Relationships",
+    "Health & Wellness",
+    "Financial Goals",
+    "Learning & Education",
+    "Community Impact",
+    "Creative Expression"
+  ];
+
+  const handleAreaSelection = (area: string) => {
+    setSelectedAreas(prev => {
+      if (prev.includes(area)) {
+        return prev.filter(a => a !== area);
+      }
+      return [...prev, area];
+    });
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-8">
       <Card className="animate-fade-in">
@@ -41,7 +67,52 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold text-center mb-6">Your Personal Development Framework</h2>
         <GoalFramework trait={dominantTrait.trait} />
+        
+        <div className="mt-12 text-center">
+          <Button 
+            onClick={() => setShowGoalSelection(true)}
+            className="bg-primary hover:bg-primary/90"
+          >
+            Create Your Personal Vision
+          </Button>
+        </div>
       </div>
+
+      {showGoalSelection && (
+        <Card className="mt-8 p-8 animate-fade-in">
+          <h2 className="text-2xl font-semibold text-center mb-6">Select Areas for Goal Setting</h2>
+          <p className="text-center text-secondary mb-8">
+            Choose the areas where you'd like to create specific goals and develop your personal vision.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {developmentAreas.map((area) => (
+              <div key={area} className="flex items-center space-x-3 p-4 border rounded-lg">
+                <Checkbox
+                  id={area}
+                  checked={selectedAreas.includes(area)}
+                  onCheckedChange={() => handleAreaSelection(area)}
+                />
+                <label
+                  htmlFor={area}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {area}
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button
+              disabled={selectedAreas.length === 0}
+              className="bg-primary hover:bg-primary/90"
+            >
+              Continue with Selected Areas ({selectedAreas.length})
+            </Button>
+          </div>
+        </Card>
+      )}
     </div>
   );
 };
