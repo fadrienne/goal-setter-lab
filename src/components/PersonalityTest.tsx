@@ -20,12 +20,51 @@ const questions = [
     text: "I am always prepared",
     trait: "conscientiousness",
   },
-  // Add more questions here
+  {
+    id: 4,
+    text: "I get stressed out easily",
+    trait: "neuroticism",
+  },
+  {
+    id: 5,
+    text: "I have a rich vocabulary",
+    trait: "openness",
+  },
+  {
+    id: 6,
+    text: "I don't talk a lot",
+    trait: "extraversion",
+    reversed: true,
+  },
+  {
+    id: 7,
+    text: "I am interested in people",
+    trait: "agreeableness",
+  },
+  {
+    id: 8,
+    text: "I leave my belongings around",
+    trait: "conscientiousness",
+    reversed: true,
+  },
+  {
+    id: 9,
+    text: "I am relaxed most of the time",
+    trait: "neuroticism",
+    reversed: true,
+  },
+  {
+    id: 10,
+    text: "I have difficulty understanding abstract ideas",
+    trait: "openness",
+    reversed: true,
+  }
 ];
 
 const PersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [isComplete, setIsComplete] = useState(false);
 
   const progress = (currentQuestion / questions.length) * 100;
 
@@ -37,8 +76,58 @@ const PersonalityTest = () => {
     
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
+    } else {
+      setIsComplete(true);
     }
   };
+
+  const calculateTraitScore = (trait: string) => {
+    const traitQuestions = questions.filter(q => q.trait === trait);
+    let score = 0;
+    let count = 0;
+    
+    traitQuestions.forEach(question => {
+      const answer = answers[question.id];
+      if (answer) {
+        score += question.reversed ? (6 - answer) : answer;
+        count++;
+      }
+    });
+    
+    return count > 0 ? Math.round((score / count) * 10) / 10 : 0;
+  };
+
+  if (isComplete) {
+    return (
+      <Card className="max-w-2xl mx-auto p-8 animate-fade-in">
+        <h2 className="text-2xl font-semibold text-center mb-6">Your Personality Profile</h2>
+        <div className="space-y-4">
+          <div className="grid gap-4">
+            <div className="p-4 bg-accent rounded-lg">
+              <h3 className="font-semibold mb-2">Extraversion: {calculateTraitScore("extraversion")}/5</h3>
+              <Progress value={calculateTraitScore("extraversion") * 20} className="h-2" />
+            </div>
+            <div className="p-4 bg-accent rounded-lg">
+              <h3 className="font-semibold mb-2">Agreeableness: {calculateTraitScore("agreeableness")}/5</h3>
+              <Progress value={calculateTraitScore("agreeableness") * 20} className="h-2" />
+            </div>
+            <div className="p-4 bg-accent rounded-lg">
+              <h3 className="font-semibold mb-2">Conscientiousness: {calculateTraitScore("conscientiousness")}/5</h3>
+              <Progress value={calculateTraitScore("conscientiousness") * 20} className="h-2" />
+            </div>
+            <div className="p-4 bg-accent rounded-lg">
+              <h3 className="font-semibold mb-2">Neuroticism: {calculateTraitScore("neuroticism")}/5</h3>
+              <Progress value={calculateTraitScore("neuroticism") * 20} className="h-2" />
+            </div>
+            <div className="p-4 bg-accent rounded-lg">
+              <h3 className="font-semibold mb-2">Openness: {calculateTraitScore("openness")}/5</h3>
+              <Progress value={calculateTraitScore("openness") * 20} className="h-2" />
+            </div>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <div className="min-h-screen p-6 bg-accent">
