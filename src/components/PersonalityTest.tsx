@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
-const questions = [
+const allQuestions = [
+  // Extraversion questions
   {
     id: 1,
     text: "I am the life of the party",
@@ -11,29 +12,31 @@ const questions = [
   },
   {
     id: 2,
-    text: "I feel little concern for others",
-    trait: "agreeableness",
+    text: "I don't talk a lot",
+    trait: "extraversion",
     reversed: true,
   },
   {
     id: 3,
-    text: "I am always prepared",
-    trait: "conscientiousness",
+    text: "I feel comfortable around people",
+    trait: "extraversion",
   },
   {
     id: 4,
-    text: "I get stressed out easily",
-    trait: "neuroticism",
+    text: "I keep in the background",
+    trait: "extraversion",
+    reversed: true,
   },
   {
     id: 5,
-    text: "I have a rich vocabulary",
-    trait: "openness",
+    text: "I start conversations",
+    trait: "extraversion",
   },
+  // Agreeableness questions
   {
     id: 6,
-    text: "I don't talk a lot",
-    trait: "extraversion",
+    text: "I feel little concern for others",
+    trait: "agreeableness",
     reversed: true,
   },
   {
@@ -43,28 +46,124 @@ const questions = [
   },
   {
     id: 8,
+    text: "I insult people",
+    trait: "agreeableness",
+    reversed: true,
+  },
+  {
+    id: 9,
+    text: "I sympathize with others' feelings",
+    trait: "agreeableness",
+  },
+  {
+    id: 10,
+    text: "I am interested in other people's problems",
+    trait: "agreeableness",
+  },
+  // Conscientiousness questions
+  {
+    id: 11,
+    text: "I am always prepared",
+    trait: "conscientiousness",
+  },
+  {
+    id: 12,
     text: "I leave my belongings around",
     trait: "conscientiousness",
     reversed: true,
   },
   {
-    id: 9,
+    id: 13,
+    text: "I pay attention to details",
+    trait: "conscientiousness",
+  },
+  {
+    id: 14,
+    text: "I make a mess of things",
+    trait: "conscientiousness",
+    reversed: true,
+  },
+  {
+    id: 15,
+    text: "I follow a schedule",
+    trait: "conscientiousness",
+  },
+  // Neuroticism questions
+  {
+    id: 16,
+    text: "I get stressed out easily",
+    trait: "neuroticism",
+  },
+  {
+    id: 17,
     text: "I am relaxed most of the time",
     trait: "neuroticism",
     reversed: true,
   },
   {
-    id: 10,
+    id: 18,
+    text: "I worry about things",
+    trait: "neuroticism",
+  },
+  {
+    id: 19,
+    text: "I seldom feel blue",
+    trait: "neuroticism",
+    reversed: true,
+  },
+  {
+    id: 20,
+    text: "I am easily disturbed",
+    trait: "neuroticism",
+  },
+  // Openness questions
+  {
+    id: 21,
+    text: "I have a rich vocabulary",
+    trait: "openness",
+  },
+  {
+    id: 22,
     text: "I have difficulty understanding abstract ideas",
     trait: "openness",
     reversed: true,
-  }
+  },
+  {
+    id: 23,
+    text: "I have a vivid imagination",
+    trait: "openness",
+  },
+  {
+    id: 24,
+    text: "I am not interested in abstract ideas",
+    trait: "openness",
+    reversed: true,
+  },
+  {
+    id: 25,
+    text: "I have excellent ideas",
+    trait: "openness",
+  },
 ];
 
 const PersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
+  const [questions, setQuestions] = useState<typeof allQuestions>([]);
+
+  useEffect(() => {
+    // Select 3 random questions for each trait
+    const selectedQuestions = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].flatMap(
+      (trait) => {
+        const traitQuestions = allQuestions.filter((q) => q.trait === trait);
+        return traitQuestions
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+      }
+    );
+    setQuestions(selectedQuestions);
+  }, []);
 
   const progress = (currentQuestion / questions.length) * 100;
 
@@ -97,11 +196,29 @@ const PersonalityTest = () => {
     return count > 0 ? Math.round((score / count) * 10) / 10 : 0;
   };
 
+  const getDominantTrait = () => {
+    const traits = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"];
+    const scores = traits.map(trait => ({
+      trait,
+      score: calculateTraitScore(trait)
+    }));
+    
+    return scores.reduce((highest, current) => 
+      current.score > highest.score ? current : highest
+    );
+  };
+
   if (isComplete) {
+    const dominantTrait = getDominantTrait();
+    
     return (
       <Card className="max-w-2xl mx-auto p-8 animate-fade-in">
         <h2 className="text-2xl font-semibold text-center mb-6">Your Personality Profile</h2>
         <div className="space-y-4">
+          <div className="text-center mb-8">
+            <h3 className="text-xl font-semibold mb-2">Your Dominant Trait</h3>
+            <p className="text-lg text-primary capitalize">{dominantTrait.trait}</p>
+          </div>
           <div className="grid gap-4">
             <div className="p-4 bg-accent rounded-lg">
               <h3 className="font-semibold mb-2">Extraversion: {calculateTraitScore("extraversion")}/5</h3>
@@ -127,6 +244,10 @@ const PersonalityTest = () => {
         </div>
       </Card>
     );
+  }
+
+  if (questions.length === 0) {
+    return <div>Loading questions...</div>;
   }
 
   return (
