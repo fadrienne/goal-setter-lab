@@ -17,6 +17,8 @@ interface VisionPlannerProps {
   };
 }
 
+const MAX_DREAMS_LENGTH = 2000; // Maximum characters allowed
+
 const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [personalDreams, setPersonalDreams] = useState("");
@@ -36,9 +38,28 @@ const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => 
     });
   };
 
+  const handleDreamsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    if (text.length <= MAX_DREAMS_LENGTH) {
+      setPersonalDreams(text);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Text too long",
+        description: `Please limit your input to ${MAX_DREAMS_LENGTH} characters.`
+      });
+    }
+  };
+
   const generatePlan = async () => {
-    const framework = personalityGoals.find(g => g.trait === dominantTrait.trait);
-    if (!framework) return;
+    if (personalDreams.length > MAX_DREAMS_LENGTH) {
+      toast({
+        variant: "destructive",
+        title: "Text too long",
+        description: `Please limit your input to ${MAX_DREAMS_LENGTH} characters.`
+      });
+      return;
+    }
 
     setIsGenerating(true);
     try {
@@ -99,15 +120,17 @@ const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => 
               <CardTitle>Share Your Dreams</CardTitle>
               <CardDescription>
                 Tell us about your aspirations, dreams, and what you envision for your future. 
-                This will help create a more personalized vision plan.
+                Maximum {MAX_DREAMS_LENGTH} characters.
+                ({MAX_DREAMS_LENGTH - personalDreams.length} characters remaining)
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Textarea
                 placeholder="Describe your dreams and aspirations..."
                 value={personalDreams}
-                onChange={(e) => setPersonalDreams(e.target.value)}
+                onChange={handleDreamsChange}
                 className="min-h-[200px]"
+                maxLength={MAX_DREAMS_LENGTH}
               />
             </CardContent>
           </Card>
