@@ -14,7 +14,7 @@ interface VisionInput {
 
 export const generateAIVision = async (input: VisionInput) => {
   try {
-    console.log('Calling Edge Function with input:', input);
+    console.log('Input to Edge Function:', input);
     
     const { data, error } = await supabase.functions.invoke('generate-vision', {
       body: {
@@ -22,14 +22,13 @@ export const generateAIVision = async (input: VisionInput) => {
         selectedAreas: input.selectedAreas,
         coreValues: input.coreValues,
         personalDreams: input.personalDreams
-      },
-      headers: {
-        Authorization: `Bearer ${supabaseAnonKey}`
       }
     });
 
     if (error) {
-      console.error('Error from Edge Function:', error);
+      console.error('Edge Function Error:', error);
+      console.error('Error Status:', error.status);
+      console.error('Error Message:', error.message);
       throw new Error(`Edge Function error: ${error.message}`);
     }
 
@@ -38,10 +37,10 @@ export const generateAIVision = async (input: VisionInput) => {
       throw new Error('No data received from the Edge Function');
     }
 
-    console.log('Edge Function response:', data);
+    console.log('Edge Function Response:', data);
     return data;
   } catch (error) {
-    console.error('Error generating vision:', error);
+    console.error('Error in generateAIVision:', error);
     throw error;
   }
 };
