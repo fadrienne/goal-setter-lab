@@ -4,6 +4,7 @@ import { useState } from "react";
 import GoalFramework from "./GoalFramework";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
+import VisionPlanner from "./VisionPlanner";
 
 interface ResultsDisplayProps {
   traitScores: {
@@ -19,6 +20,7 @@ interface ResultsDisplayProps {
 const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => {
   const [showGoalSelection, setShowGoalSelection] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
+  const [showVisionPlanner, setShowVisionPlanner] = useState(false);
 
   const developmentAreas = [
     "Career Growth",
@@ -38,6 +40,10 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
       }
       return [...prev, area];
     });
+  };
+
+  const handleContinue = () => {
+    setShowVisionPlanner(true);
   };
 
   return (
@@ -78,7 +84,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
         </div>
       </div>
 
-      {showGoalSelection && (
+      {showGoalSelection && !showVisionPlanner && (
         <Card className="mt-8 p-8 animate-fade-in">
           <h2 className="text-2xl font-semibold text-center mb-6">Select Areas for Goal Setting</h2>
           <p className="text-center text-secondary mb-8">
@@ -105,6 +111,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
 
           <div className="mt-8 text-center">
             <Button
+              onClick={handleContinue}
               disabled={selectedAreas.length === 0}
               className="bg-primary hover:bg-primary/90"
             >
@@ -112,6 +119,13 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
             </Button>
           </div>
         </Card>
+      )}
+
+      {showVisionPlanner && (
+        <VisionPlanner
+          selectedAreas={selectedAreas}
+          dominantTrait={dominantTrait}
+        />
       )}
     </div>
   );
