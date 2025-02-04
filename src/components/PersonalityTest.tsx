@@ -1,55 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import QuestionCard from "./QuestionCard";
 import ResultsDisplay from "./ResultsDisplay";
-import { allQuestions } from "@/utils/questions";
+import { useQuestions } from "@/hooks/useQuestions";
+import { calculateTraitScore, calculateDominantTrait } from "@/utils/scoreCalculations";
 
 const PersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
-  const [questions, setQuestions] = useState<typeof allQuestions>([]);
-
-  useEffect(() => {
-    if (questions.length === 0) {
-      const selectedQuestions = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].flatMap(
-        (trait) => {
-          const traitQuestions = allQuestions.filter((q) => q.trait === trait);
-          return traitQuestions
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3);
-        }
-      );
-      setQuestions(selectedQuestions);
-    }
-  }, [questions.length]);
-
-  const calculateTraitScore = (trait: string) => {
-    const traitQuestions = questions.filter(q => q.trait === trait);
-    let score = 0;
-    let count = 0;
-    
-    traitQuestions.forEach(question => {
-      const answer = answers[question.id];
-      if (typeof answer === 'number') {
-        score += question.reversed ? (6 - answer) : answer;
-        count++;
-      }
-    });
-    
-    return count > 0 ? Math.round((score / count) * 10) / 10 : 0;
-  };
-
-  const getDominantTrait = () => {
-    const traits = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"];
-    const scores = traits.map(trait => ({
-      trait,
-      score: calculateTraitScore(trait)
-    }));
-    
-    return scores.reduce((highest, current) => 
-      current.score > highest.score ? current : highest
-    , scores[0]);
-  };
+  const questions = useQuestions();
 
   const handleAnswer = (value: number) => {
     if (currentQuestion >= questions.length) return;
@@ -73,14 +32,14 @@ const PersonalityTest = () => {
   if (isComplete) {
     const traitScores = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].map(trait => ({
       trait,
-      score: calculateTraitScore(trait)
+      score: calculateTraitScore(questions, answers, trait)
     }));
     
     return (
       <div className="space-y-8">
         <ResultsDisplay 
           traitScores={traitScores} 
-          dominantTrait={getDominantTrait()} 
+          dominantTrait={calculateDominantTrait(questions, answers)} 
         />
       </div>
     );
