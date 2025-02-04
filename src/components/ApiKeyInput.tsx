@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { KeyRound } from "lucide-react";
 
 interface ApiKeyInputProps {
   onApiKeySaved: () => void;
@@ -31,23 +32,34 @@ const ApiKeyInput = ({ onApiKeySaved }: ApiKeyInputProps) => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>OpenAI API Key Required</CardTitle>
-        <CardDescription>
+    <Card className="max-w-xl mx-auto">
+      <CardHeader className="text-center">
+        <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-full w-fit">
+          <KeyRound className="w-6 h-6 text-primary" />
+        </div>
+        <CardTitle className="text-2xl mb-2">OpenAI API Key Required</CardTitle>
+        <CardDescription className="text-base">
           To generate personalized vision plans, we need your OpenAI API key. 
           This will only be stored in your browser for this session.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            type="password"
-            placeholder="Enter your OpenAI API key"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-          />
-          <Button type="submit">Save API Key</Button>
+          <div className="space-y-2">
+            <Input
+              type="password"
+              placeholder="Enter your OpenAI API key"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              className="text-center"
+            />
+            <p className="text-sm text-muted-foreground text-center">
+              Your API key will be stored securely in your browser's local storage
+            </p>
+          </div>
+          <Button type="submit" className="w-full">
+            Save API Key & Continue
+          </Button>
         </form>
       </CardContent>
     </Card>
