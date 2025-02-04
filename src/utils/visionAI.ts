@@ -19,7 +19,7 @@ export const generateAIVision = async (input: VisionInput) => {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gpt-4o',  // Fixed the model name
+        model: 'gpt-4',  // Updated to use standard GPT-4 model
         messages: [
           {
             role: 'system',
