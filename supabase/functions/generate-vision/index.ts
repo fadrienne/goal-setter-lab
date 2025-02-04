@@ -71,12 +71,10 @@ serve(async (req) => {
       }),
     });
 
-    console.log('OpenAI API response status:', response.status);
-    
     if (!response.ok) {
-      const error = await response.json();
-      console.error('OpenAI API Error:', error);
-      throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`);
+      const errorData = await response.text();
+      console.error('OpenAI API Error Response:', errorData);
+      throw new Error(`OpenAI API error: ${response.status} - ${errorData}`);
     }
 
     const data = await response.json();
@@ -87,15 +85,18 @@ serve(async (req) => {
       throw new Error('Invalid response from OpenAI');
     }
 
+    const content = data.choices[0].message.content;
+    console.log('Raw content from OpenAI:', content);
+
     try {
-      const visionPlan = JSON.parse(data.choices[0].message.content);
+      const visionPlan = JSON.parse(content);
       console.log('Vision plan parsed successfully:', visionPlan);
       return new Response(JSON.stringify(visionPlan), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } catch (parseError) {
       console.error('Error parsing OpenAI response:', parseError);
-      console.error('Raw response content:', data.choices[0].message.content);
+      console.error('Raw response content:', content);
       throw new Error('Failed to parse OpenAI response as JSON');
     }
   } catch (error) {
