@@ -11,14 +11,24 @@ const corsHeaders = {
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('Handling CORS preflight request');
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('Received request:', req.method);
+    console.log('Starting vision plan generation');
+    console.log('Request method:', req.method);
+    console.log('Request headers:', Object.fromEntries(req.headers));
+    
     const input = await req.json();
-    console.log('Processing input:', input);
+    console.log('Received input:', input);
 
+    if (!openAIApiKey) {
+      console.error('OpenAI API key not found in environment variables');
+      throw new Error('OpenAI API key not configured');
+    }
+
+    console.log('Making request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -61,6 +71,8 @@ serve(async (req) => {
       }),
     });
 
+    console.log('OpenAI API response status:', response.status);
+    
     if (!response.ok) {
       const error = await response.json();
       console.error('OpenAI API Error:', error);
@@ -68,9 +80,10 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('OpenAI response received');
+    console.log('OpenAI response received successfully');
 
     if (!data.choices?.[0]?.message?.content) {
+      console.error('Invalid response format from OpenAI:', data);
       throw new Error('Invalid response from OpenAI');
     }
 
