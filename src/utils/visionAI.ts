@@ -17,8 +17,6 @@ export const generateAIVision = async (input: VisionInput) => {
 
     if (error) {
       console.error('Edge Function Error:', error);
-      console.error('Error Status:', error.status);
-      console.error('Error Message:', error.message);
       throw new Error(`Edge Function error: ${error.message}`);
     }
 

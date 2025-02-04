@@ -1,16 +1,6 @@
-import { useState, useEffect } from "react";
 import PersonalityTest from "@/components/PersonalityTest";
-import ApiKeyInput from "@/components/ApiKeyInput";
 
 const Index = () => {
-  const [hasApiKey, setHasApiKey] = useState(false);
-  
-  useEffect(() => {
-    // Check for API key on component mount
-    const apiKey = localStorage.getItem('OPENAI_API_KEY');
-    setHasApiKey(!!apiKey);
-  }, []); // Empty dependency array means this runs once on mount
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent to-white">
       <div className="container mx-auto px-4 py-8">
@@ -28,11 +18,7 @@ const Index = () => {
             and create a personalized vision for your future.
           </p>
           <div className="bg-white rounded-lg shadow-lg p-6">
-            {!hasApiKey ? (
-              <ApiKeyInput onApiKeySaved={() => setHasApiKey(true)} />
-            ) : (
-              <PersonalityTest />
-            )}
+            <PersonalityTest />
           </div>
         </div>
       </div>
