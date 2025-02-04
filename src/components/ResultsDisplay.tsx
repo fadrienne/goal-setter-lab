@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import GoalFramework from "./GoalFramework";
 
 interface TraitScore {
   trait: string;
@@ -56,6 +57,8 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
           ))}
         </div>
       </Card>
+
+      <GoalFramework trait={dominantTrait.trait} />
     </div>
   );
 };
