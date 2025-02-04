@@ -10,17 +10,18 @@ const PersonalityTest = () => {
   const [questions, setQuestions] = useState<typeof allQuestions>([]);
 
   useEffect(() => {
-    // Select 3 random questions for each trait
-    const selectedQuestions = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].flatMap(
-      (trait) => {
-        const traitQuestions = allQuestions.filter((q) => q.trait === trait);
-        return traitQuestions
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3);
-      }
-    );
-    setQuestions(selectedQuestions);
-  }, []);
+    if (questions.length === 0) {
+      const selectedQuestions = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].flatMap(
+        (trait) => {
+          const traitQuestions = allQuestions.filter((q) => q.trait === trait);
+          return traitQuestions
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3);
+        }
+      );
+      setQuestions(selectedQuestions);
+    }
+  }, [questions.length]);
 
   const calculateTraitScore = (trait: string) => {
     const traitQuestions = questions.filter(q => q.trait === trait);
@@ -76,7 +77,7 @@ const PersonalityTest = () => {
     }));
     
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="space-y-8">
         <ResultsDisplay 
           traitScores={traitScores} 
           dominantTrait={getDominantTrait()} 
