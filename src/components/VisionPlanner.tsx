@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { coreValues, type VisionPlan } from "@/utils/coreValues";
-import { personalityGoals } from "@/utils/personalityGoals";
+import { type VisionPlan } from "@/utils/coreValues";
 import { generateAIVision } from "@/utils/visionAI";
 import { Loader2 } from "lucide-react";
+import CoreValuesSelector from "./vision/CoreValuesSelector";
+import DreamsInput from "./vision/DreamsInput";
+import VisionPlanDisplay from "./vision/VisionPlanDisplay";
 
 interface VisionPlannerProps {
   selectedAreas: string[];
@@ -17,7 +16,7 @@ interface VisionPlannerProps {
   };
 }
 
-const MAX_DREAMS_LENGTH = 2000; // Maximum characters allowed
+const MAX_DREAMS_LENGTH = 2000;
 
 const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -82,140 +81,44 @@ const VisionPlanner = ({ selectedAreas, dominantTrait }: VisionPlannerProps) => 
     }
   };
 
+  if (visionPlan) {
+    return (
+      <VisionPlanDisplay 
+        visionPlan={visionPlan} 
+        onStartOver={() => setVisionPlan(null)} 
+      />
+    );
+  }
+
   return (
     <div className="space-y-8 animate-fade-in">
-      {!visionPlan ? (
-        <div className="space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Select Your Core Values</CardTitle>
-              <CardDescription>
-                Choose 3 values that resonate most with your personal and professional aspirations.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {coreValues.map((value) => (
-                  <div key={value} className="flex items-center space-x-3 p-4 border rounded-lg">
-                    <Checkbox
-                      id={value}
-                      checked={selectedValues.includes(value)}
-                      onCheckedChange={() => handleValueSelection(value)}
-                      disabled={selectedValues.length >= 3 && !selectedValues.includes(value)}
-                    />
-                    <label
-                      htmlFor={value}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      {value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+      <DreamsInput
+        value={personalDreams}
+        onChange={handleDreamsChange}
+        maxLength={MAX_DREAMS_LENGTH}
+      />
+      
+      <CoreValuesSelector
+        selectedValues={selectedValues}
+        onValueSelection={handleValueSelection}
+      />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Share Your Dreams</CardTitle>
-              <CardDescription>
-                Tell us about your aspirations, dreams, and what you envision for your future. 
-                Maximum {MAX_DREAMS_LENGTH} characters.
-                ({MAX_DREAMS_LENGTH - personalDreams.length} characters remaining)
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                placeholder="Describe your dreams and aspirations..."
-                value={personalDreams}
-                onChange={handleDreamsChange}
-                className="min-h-[200px]"
-                maxLength={MAX_DREAMS_LENGTH}
-              />
-            </CardContent>
-          </Card>
-
-          <div className="mt-8 text-center">
-            <Button
-              onClick={generatePlan}
-              disabled={selectedValues.length !== 3 || !personalDreams.trim() || isGenerating}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating Your Vision Plan...
-                </>
-              ) : (
-                'Generate Your Vision Plan'
-              )}
-            </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Your SMART Goal</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold">Specific</h4>
-                  <p>{visionPlan.smartGoal.specific}</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold">Measurable</h4>
-                  <p>{visionPlan.smartGoal.measurable}</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold">Achievable</h4>
-                  <p>{visionPlan.smartGoal.achievable}</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold">Relevant</h4>
-                  <p>{visionPlan.smartGoal.relevant}</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold">Time-Bound</h4>
-                  <p>{visionPlan.smartGoal.timeBound}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Your 5-Year Vision</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-lg mb-8">{visionPlan.fiveYearVision}</p>
-              
-              <div className="space-y-6">
-                {visionPlan.yearlyMilestones.map((milestone) => (
-                  <div key={milestone.year} className="border-l-4 border-primary pl-4">
-                    <h4 className="font-semibold mb-2">Year {milestone.year}</h4>
-                    <ul className="list-disc pl-5 space-y-2">
-                      {milestone.goals.map((goal, index) => (
-                        <li key={index}>{goal}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="text-center">
-            <Button
-              onClick={() => setVisionPlan(null)}
-              className="bg-secondary hover:bg-secondary/90"
-            >
-              Start Over
-            </Button>
-          </div>
-        </div>
-      )}
+      <div className="mt-8 text-center">
+        <Button
+          onClick={generatePlan}
+          disabled={selectedValues.length !== 3 || !personalDreams.trim() || isGenerating}
+          className="bg-primary hover:bg-primary/90"
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Generating Your Vision Plan...
+            </>
+          ) : (
+            'Generate Your Vision Plan'
+          )}
+        </Button>
+      </div>
     </div>
   );
 };
