@@ -28,6 +28,30 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
+    const systemPrompt = 
+      "You are a professional life coach and vision planning expert. Create a personalized 5-year vision plan based on the following information:\n\n" +
+      "- Personality trait: " + input.personalityTrait + "\n" +
+      "- Focus areas: " + input.selectedAreas.join(', ') + "\n" +
+      "- Core values: " + input.coreValues.join(', ') + "\n" +
+      "- Personal dreams: " + input.personalDreams + "\n\n" +
+      "Provide the response in the following JSON structure:\n" +
+      "{\n" +
+      "  \"smartGoal\": {\n" +
+      "    \"specific\": \"string\",\n" +
+      "    \"measurable\": \"string\",\n" +
+      "    \"achievable\": \"string\",\n" +
+      "    \"relevant\": \"string\",\n" +
+      "    \"timeBound\": \"string\"\n" +
+      "  },\n" +
+      "  \"fiveYearVision\": \"string\",\n" +
+      "  \"yearlyMilestones\": [\n" +
+      "    {\n" +
+      "      \"year\": \"number\",\n" +
+      "      \"goals\": [\"string\"]\n" +
+      "    }\n" +
+      "  ]\n" +
+      "}";
+
     console.log('Making request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -40,27 +64,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `You are a professional life coach and vision planning expert. Create a personalized 5-year vision plan based on:
-              - Personality trait: ${input.personalityTrait}
-              - Focus areas: ${input.selectedAreas.join(', ')}
-              - Core values: ${input.coreValues.join(', ')}
-              - Personal dreams: ${input.personalDreams}
-              
-              Structure the response as a JSON object with:
-              {
-                "smartGoal": {
-                  "specific": string,
-                  "measurable": string,
-                  "achievable": string,
-                  "relevant": string,
-                  "timeBound": string
-                },
-                "fiveYearVision": string,
-                "yearlyMilestones": Array<{
-                  "year": number,
-                  "goals": string[]
-                }>
-              }`
+            content: systemPrompt
           },
           {
             role: 'user',
@@ -87,12 +91,17 @@ serve(async (req) => {
       throw new Error('Invalid response from OpenAI');
     }
 
-    const visionPlan = JSON.parse(data.choices[0].message.content);
-    console.log('Vision plan parsed successfully');
-
-    return new Response(JSON.stringify(visionPlan), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    try {
+      const visionPlan = JSON.parse(data.choices[0].message.content);
+      console.log('Vision plan parsed successfully');
+      return new Response(JSON.stringify(visionPlan), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    } catch (parseError) {
+      console.error('Error parsing OpenAI response:', parseError);
+      console.error('Raw response content:', data.choices[0].message.content);
+      throw new Error('Failed to parse OpenAI response as JSON');
+    }
   } catch (error) {
     console.error('Error in generate-vision function:', error);
     return new Response(JSON.stringify({ error: error.message }), {
