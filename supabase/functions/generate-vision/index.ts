@@ -9,17 +9,12 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    console.log('Handling CORS preflight request');
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     console.log('Starting vision plan generation');
-    console.log('Request method:', req.method);
-    console.log('Request headers:', Object.fromEntries(req.headers));
-    
     const input = await req.json();
     console.log('Received input:', input);
 
