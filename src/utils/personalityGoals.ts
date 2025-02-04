@@ -20,12 +20,18 @@ export const personalityGoals: GoalFramework[] = [
     longTermStrategies: [
       "Develop leadership skills through mentorship programs",
       "Build a network in your professional field",
-      "Create platforms for social interaction and community building"
+      "Create platforms for social interaction and community building",
+      "Establish yourself as a thought leader in your industry",
+      "Launch community initiatives that bring people together",
+      "Create and lead professional development workshops"
     ],
     developmentAreas: [
       "Active listening skills",
       "One-on-one relationship building",
-      "Balancing social energy with quiet reflection"
+      "Balancing social energy with quiet reflection",
+      "Emotional intelligence in group dynamics",
+      "Strategic networking abilities",
+      "Mindful communication practices"
     ]
   },
   {
@@ -40,12 +46,18 @@ export const personalityGoals: GoalFramework[] = [
     longTermStrategies: [
       "Develop counseling or mentoring skills",
       "Create support systems in your community",
-      "Build collaborative projects that benefit others"
+      "Build collaborative projects that benefit others",
+      "Establish conflict resolution programs",
+      "Create inclusive community initiatives",
+      "Develop leadership roles in humanitarian projects"
     ],
     developmentAreas: [
       "Assertiveness in challenging situations",
       "Self-advocacy skills",
-      "Balance between helping others and self-care"
+      "Balance between helping others and self-care",
+      "Boundary setting and maintenance",
+      "Strategic decision-making",
+      "Professional negotiation techniques"
     ]
   },
   {
@@ -60,12 +72,18 @@ export const personalityGoals: GoalFramework[] = [
     longTermStrategies: [
       "Develop project management expertise",
       "Create systems for continuous improvement",
-      "Build a reputation for reliability and excellence"
+      "Build a reputation for reliability and excellence",
+      "Establish quality control methodologies",
+      "Create scalable organizational systems",
+      "Develop leadership in process optimization"
     ],
     developmentAreas: [
       "Flexibility in unexpected situations",
       "Delegating tasks to others",
-      "Balancing perfectionism with efficiency"
+      "Balancing perfectionism with efficiency",
+      "Adaptability to change",
+      "Creative problem-solving",
+      "Team collaboration skills"
     ]
   },
   {
@@ -80,12 +98,18 @@ export const personalityGoals: GoalFramework[] = [
     longTermStrategies: [
       "Develop emotional awareness and regulation skills",
       "Build resilience through gradual exposure to challenges",
-      "Create support systems for emotional well-being"
+      "Create support systems for emotional well-being",
+      "Master advanced stress management techniques",
+      "Develop professional emotional intelligence training",
+      "Create personal growth workshops"
     ],
     developmentAreas: [
       "Stress management",
       "Positive self-talk",
-      "Building emotional resilience"
+      "Building emotional resilience",
+      "Anxiety management techniques",
+      "Professional boundary setting",
+      "Crisis management skills"
     ]
   },
   {
@@ -100,12 +124,18 @@ export const personalityGoals: GoalFramework[] = [
     longTermStrategies: [
       "Develop expertise in multiple domains",
       "Create innovative solutions to complex problems",
-      "Build bridges between different fields or communities"
+      "Build bridges between different fields or communities",
+      "Establish creative thinking workshops",
+      "Develop cross-cultural collaboration initiatives",
+      "Create platforms for innovative idea exchange"
     ],
     developmentAreas: [
       "Following through on projects",
       "Practical application of ideas",
-      "Balancing exploration with focus"
+      "Balancing exploration with focus",
+      "Project management skills",
+      "Strategic implementation of ideas",
+      "Time management for creative work"
     ]
   }
 ];
