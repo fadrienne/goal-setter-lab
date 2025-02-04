@@ -1,1 +1,2 @@
-project_id = "mdamgeerddbblnqdongf"
+[functions.generate-vision]
+verify_jwt = false
