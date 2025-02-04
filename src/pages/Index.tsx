@@ -13,13 +13,14 @@ const Index = () => {
           <h1 className="text-4xl font-bold text-primary mb-4 font-sans">
             Discover Your Personality Profile
           </h1>
-          <p className="text-lg text-secondary max-w-2xl mx-auto font-sans">
+          <p className="text-lg text-secondary max-w-2xl mx-auto font-sans mb-8">
             Take our comprehensive Big Five personality assessment to understand yourself better
             and create a personalized vision for your future.
           </p>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <PersonalityTest />
+          </div>
         </div>
-        
-        <PersonalityTest />
       </div>
     </div>
   );
