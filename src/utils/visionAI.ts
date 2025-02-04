@@ -1,3 +1,10 @@
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
 interface VisionInput {
   personalityTrait: string;
   selectedAreas: string[];
@@ -7,11 +14,21 @@ interface VisionInput {
 
 export const generateAIVision = async (input: VisionInput) => {
   try {
+    // Fetch the OpenAI API key from Supabase secrets
+    const { data, error } = await supabase.functions.invoke('get-secret', {
+      body: { secretName: 'OPENAI_API_KEY' }
+    });
+
+    if (error || !data?.secret) {
+      console.error('Error fetching OpenAI API key:', error);
+      throw new Error('Failed to fetch OpenAI API key');
+    }
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+        'Authorization': `Bearer ${data.secret}`
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
@@ -48,8 +65,8 @@ export const generateAIVision = async (input: VisionInput) => {
       throw new Error('Failed to generate vision plan');
     }
 
-    const data = await response.json();
-    return JSON.parse(data.choices[0].message.content);
+    const data2 = await response.json();
+    return JSON.parse(data2.choices[0].message.content);
   } catch (error) {
     console.error('Error generating AI vision:', error);
     throw new Error('Failed to generate vision plan');
