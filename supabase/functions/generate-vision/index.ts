@@ -22,21 +22,9 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Received request:', req.method);
     const input: VisionInput = await req.json();
-    console.log('Received input:', input);
-
-    const systemPrompt = `You are a professional life coach and vision planning expert. Your task is to create a personalized 5-year vision plan based on the following information:
-    - Dominant personality trait: ${input.personalityTrait}
-    - Focus areas: ${input.selectedAreas.join(', ')}
-    - Core values: ${input.coreValues.join(', ')}
-    - Personal dreams and aspirations: ${input.personalDreams}
-
-    Create a structured response that includes:
-    1. A SMART goal
-    2. A compelling 5-year vision statement
-    3. Yearly milestones (specific goals for each year)
-
-    Make the plan ambitious yet achievable, and ensure it aligns with their personality trait and core values.`;
+    console.log('Processing input:', input);
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -47,8 +35,34 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'gpt-4o',
         messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: 'Please generate a structured vision plan in JSON format with the following structure: { smartGoal: { specific, measurable, achievable, relevant, timeBound }, fiveYearVision: string, yearlyMilestones: Array<{ year: number, goals: string[] }> }' }
+          {
+            role: 'system',
+            content: `You are a professional life coach and vision planning expert. Create a personalized 5-year vision plan based on:
+              - Personality trait: ${input.personalityTrait}
+              - Focus areas: ${input.selectedAreas.join(', ')}
+              - Core values: ${input.coreValues.join(', ')}
+              - Personal dreams: ${input.personalDreams}
+              
+              Structure the response as a JSON object with:
+              {
+                "smartGoal": {
+                  "specific": string,
+                  "measurable": string,
+                  "achievable": string,
+                  "relevant": string,
+                  "timeBound": string
+                },
+                "fiveYearVision": string,
+                "yearlyMilestones": Array<{
+                  "year": number,
+                  "goals": string[]
+                }>
+              }`
+          },
+          {
+            role: 'user',
+            content: 'Generate a structured vision plan based on the provided information.'
+          }
         ],
         temperature: 0.7,
       }),
@@ -61,14 +75,14 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('OpenAI response:', data);
+    console.log('OpenAI response received');
 
     if (!data.choices?.[0]?.message?.content) {
       throw new Error('Invalid response from OpenAI');
     }
 
     const visionPlan = JSON.parse(data.choices[0].message.content);
-    console.log('Parsed vision plan:', visionPlan);
+    console.log('Vision plan parsed successfully');
 
     return new Response(JSON.stringify(visionPlan), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
