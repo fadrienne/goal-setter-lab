@@ -7,14 +7,19 @@ interface VisionInput {
 
 export const generateAIVision = async (input: VisionInput) => {
   try {
+    const apiKey = localStorage.getItem('OPENAI_API_KEY');
+    if (!apiKey) {
+      throw new Error('OpenAI API key not found');
+    }
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('OPENAI_API_KEY')}`
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4o',  // Fixed the model name
         messages: [
           {
             role: 'system',
@@ -41,6 +46,12 @@ export const generateAIVision = async (input: VisionInput) => {
         ]
       })
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('OpenAI API Error:', errorData);
+      throw new Error('Failed to generate vision plan');
+    }
 
     const data = await response.json();
     return JSON.parse(data.choices[0].message.content);
