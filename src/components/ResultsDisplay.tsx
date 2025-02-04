@@ -108,7 +108,7 @@ const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => 
               className="bg-primary hover:bg-primary/90"
               disabled={selectedValues.length !== 3}
             >
-              Create Your Personal Vision
+              Choose Visioning Areas
             </Button>
           </div>
         </div>
