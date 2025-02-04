@@ -1,9 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = 'https://ykxcvvfvqxjvvjwqvvxm.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlreGN2dmZ2cXhqdnZqd3F2dnhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY5NzI2NzAsImV4cCI6MjAyMjU0ODY3MH0.qwpEAXEXD_YZHDZPVbI4v8h6KLhZEQsZQQf_vGZVVtY';
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from '@/integrations/supabase/client';
 
 interface VisionInput {
   personalityTrait: string;

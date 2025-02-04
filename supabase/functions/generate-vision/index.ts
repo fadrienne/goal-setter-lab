@@ -15,25 +15,6 @@ interface VisionInput {
   personalDreams: string;
 }
 
-interface YearlyMilestone {
-  year: number;
-  goals: string[];
-}
-
-interface SmartGoal {
-  specific: string;
-  measurable: string;
-  achievable: string;
-  relevant: string;
-  timeBound: string;
-}
-
-interface VisionPlan {
-  smartGoal: SmartGoal;
-  fiveYearVision: string;
-  yearlyMilestones: YearlyMilestone[];
-}
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -73,6 +54,12 @@ serve(async (req) => {
       }),
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('OpenAI API Error:', error);
+      throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`);
+    }
+
     const data = await response.json();
     console.log('OpenAI response:', data);
 
@@ -80,7 +67,7 @@ serve(async (req) => {
       throw new Error('Invalid response from OpenAI');
     }
 
-    const visionPlan: VisionPlan = JSON.parse(data.choices[0].message.content);
+    const visionPlan = JSON.parse(data.choices[0].message.content);
     console.log('Parsed vision plan:', visionPlan);
 
     return new Response(JSON.stringify(visionPlan), {
