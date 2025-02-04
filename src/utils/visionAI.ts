@@ -9,18 +9,10 @@ interface VisionInput {
 
 export const generateAIVision = async (input: VisionInput) => {
   try {
-    const apiKey = localStorage.getItem('OPENAI_API_KEY');
-    if (!apiKey) {
-      throw new Error('OpenAI API key is required');
-    }
-
     console.log('Input to Edge Function:', input);
     
     const { data, error } = await supabase.functions.invoke('generate-vision', {
-      body: {
-        ...input,
-        apiKey
-      }
+      body: input
     });
 
     if (error) {
