@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import QuestionCard from "./QuestionCard";
 import ResultsDisplay from "./ResultsDisplay";
-import { allQuestions } from "@/utils/questions"; // We'll create this file next
+import { allQuestions } from "@/utils/questions";
 
 const PersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -29,7 +29,7 @@ const PersonalityTest = () => {
     
     traitQuestions.forEach(question => {
       const answer = answers[question.id];
-      if (answer) {
+      if (typeof answer === 'number') {
         score += question.reversed ? (6 - answer) : answer;
         count++;
       }
@@ -47,34 +47,42 @@ const PersonalityTest = () => {
     
     return scores.reduce((highest, current) => 
       current.score > highest.score ? current : highest
-    );
+    , scores[0]);
   };
 
   const handleAnswer = (value: number) => {
-    setAnswers((prev) => ({
+    if (currentQuestion >= questions.length) return;
+    
+    setAnswers(prev => ({
       ...prev,
       [questions[currentQuestion].id]: value,
     }));
     
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
+      setCurrentQuestion(prev => prev + 1);
     } else {
       setIsComplete(true);
     }
   };
 
+  if (questions.length === 0) {
+    return <div className="text-center p-4">Loading questions...</div>;
+  }
+
   if (isComplete) {
-    const dominantTrait = getDominantTrait();
     const traitScores = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].map(trait => ({
       trait,
       score: calculateTraitScore(trait)
     }));
     
-    return <ResultsDisplay traitScores={traitScores} dominantTrait={dominantTrait} />;
-  }
-
-  if (questions.length === 0) {
-    return <div>Loading questions...</div>;
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <ResultsDisplay 
+          traitScores={traitScores} 
+          dominantTrait={getDominantTrait()} 
+        />
+      </div>
+    );
   }
 
   const progress = (currentQuestion / questions.length) * 100;
