@@ -35,7 +35,7 @@ const PersonalityTestSection = ({ onComplete }: PersonalityTestSectionProps) => 
   const progress = (currentQuestion / questions.length) * 100;
 
   return (
-    <div className="min-h-screen p-6 bg-accent">
+    <div className="h-full p-6 bg-accent">
       <QuestionCard
         questionText={questions[currentQuestion].text}
         currentAnswer={answers[questions[currentQuestion].id]}
