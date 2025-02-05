@@ -14,11 +14,11 @@ interface ResultsDisplayProps {
 const ResultsDisplay = ({ traitScores, dominantTrait }: ResultsDisplayProps) => {
   const getTraitDescription = (trait: string) => {
     const descriptions: Record<string, string> = {
-      extraversion: "Tendency to seek stimulation in the company of others",
-      agreeableness: "Tendency to be compassionate and cooperative",
-      conscientiousness: "Tendency to show self-discipline and aim for achievement",
-      neuroticism: "Tendency to experience unpleasant emotions easily",
-      openness: "Tendency to be open to experiencing a variety of activities",
+    extraversion: "A preference for social engagement, excitement, and external stimulation.",
+    agreeableness: "A disposition toward kindness, empathy, and cooperation in relationships.",
+    conscientiousness: "A strong sense of responsibility, organization, and goal-oriented behavior.",
+    neuroticism: "A tendency toward emotional sensitivity, stress, and mood fluctuations.",
+    openness: "A curiosity for new experiences, creativity, and a broad range of interests.",
     };
     return descriptions[trait] || trait;
   };
