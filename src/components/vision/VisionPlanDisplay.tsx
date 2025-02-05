@@ -30,8 +30,9 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
           fileName={pdfFileName}
+          className="inline-block"
         >
-          {({ blob, url, loading, error }) => (
+          {({ loading }) => (
             <Button 
               variant="outline"
               className="flex items-center gap-2"
