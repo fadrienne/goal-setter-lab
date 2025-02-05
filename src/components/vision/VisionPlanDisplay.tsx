@@ -9,51 +9,64 @@ interface VisionPlanDisplayProps {
 
 const VisionPlanDisplay = ({ visionPlan, onStartOver }: VisionPlanDisplayProps) => {
   return (
-    <div className="space-y-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Your SMART Goal</CardTitle>
+    <div className="space-y-8 animate-fade-in">
+      <Card className="bg-white shadow-lg">
+        <CardHeader className="border-b bg-accent/50">
+          <CardTitle className="text-2xl text-primary">Your SMART Goal</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-semibold">Specific</h4>
-              <p>{visionPlan.smartGoal.specific}</p>
+        <CardContent className="p-6">
+          <div className="space-y-6">
+            <div className="p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold text-lg text-primary mb-2">Specific</h4>
+              <p className="text-gray-700">{visionPlan.smartGoal.specific}</p>
             </div>
-            <div>
-              <h4 className="font-semibold">Measurable</h4>
-              <p>{visionPlan.smartGoal.measurable}</p>
+            <div className="p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold text-lg text-primary mb-2">Measurable</h4>
+              <p className="text-gray-700">{visionPlan.smartGoal.measurable}</p>
             </div>
-            <div>
-              <h4 className="font-semibold">Achievable</h4>
-              <p>{visionPlan.smartGoal.achievable}</p>
+            <div className="p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold text-lg text-primary mb-2">Achievable</h4>
+              <p className="text-gray-700">{visionPlan.smartGoal.achievable}</p>
             </div>
-            <div>
-              <h4 className="font-semibold">Relevant</h4>
-              <p>{visionPlan.smartGoal.relevant}</p>
+            <div className="p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold text-lg text-primary mb-2">Relevant</h4>
+              <p className="text-gray-700">{visionPlan.smartGoal.relevant}</p>
             </div>
-            <div>
-              <h4 className="font-semibold">Time-Bound</h4>
-              <p>{visionPlan.smartGoal.timeBound}</p>
+            <div className="p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold text-lg text-primary mb-2">Time-Bound</h4>
+              <p className="text-gray-700">{visionPlan.smartGoal.timeBound}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Your 5-Year Vision</CardTitle>
+      <Card className="bg-white shadow-lg">
+        <CardHeader className="border-b bg-accent/50">
+          <CardTitle className="text-2xl text-primary">Your 5-Year Vision</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-lg mb-8">{visionPlan.fiveYearVision}</p>
+        <CardContent className="p-6">
+          <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+            {visionPlan.fiveYearVision}
+          </p>
           
-          <div className="space-y-6">
+          <div className="space-y-8">
             {visionPlan.yearlyMilestones.map((milestone) => (
-              <div key={milestone.year} className="border-l-4 border-primary pl-4">
-                <h4 className="font-semibold mb-2">Year {milestone.year}</h4>
-                <ul className="list-disc pl-5 space-y-2">
+              <div 
+                key={milestone.year} 
+                className="border-l-4 border-primary pl-6 py-4"
+              >
+                <h4 className="font-semibold text-lg text-primary mb-4">
+                  Year {milestone.year}
+                </h4>
+                <ul className="space-y-3">
                   {milestone.goals.map((goal, index) => (
-                    <li key={index}>{goal}</li>
+                    <li 
+                      key={index} 
+                      className="text-gray-700 leading-relaxed flex items-start"
+                    >
+                      <span className="inline-block w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
+                      {goal}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -62,10 +75,10 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver }: VisionPlanDisplayProps) 
         </CardContent>
       </Card>
 
-      <div className="text-center">
+      <div className="text-center pt-4">
         <Button
           onClick={onStartOver}
-          className="bg-secondary hover:bg-secondary/90"
+          className="bg-primary hover:bg-primary/90 text-white px-8 py-2"
         >
           Start Over
         </Button>
