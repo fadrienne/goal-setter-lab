@@ -1,3 +1,4 @@
+
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -29,6 +30,14 @@ serve(async (req) => {
       `- Focus area: ${input.selectedAreas[0]}\n` +
       `- Core values: ${input.coreValues.join(', ')}\n` +
       `- Personal dreams: ${input.personalDreams}\n\n` +
+      `Self-reflection insights:\n` +
+      `- Current situation: ${input.selfReflectionAnswers?.currentSituation || 'Not provided'}\n` +
+      `- Challenges and opportunities: ${input.selfReflectionAnswers?.challengesOpportunities || 'Not provided'}\n` +
+      `- Areas needing attention: ${input.selfReflectionAnswers?.attentionAreas || 'Not provided'}\n` +
+      `- Ideal work-life integration: ${input.selfReflectionAnswers?.workLifeIntegration || 'Not provided'}\n` +
+      `- Desired skills: ${input.selfReflectionAnswers?.desiredSkills || 'Not provided'}\n` +
+      `- Habits to build/break: ${input.selfReflectionAnswers?.habits || 'Not provided'}\n` +
+      `- Community impact goals: ${input.selfReflectionAnswers?.communityImpact || 'Not provided'}\n\n` +
       `IMPORTANT: Extract and focus ONLY on the aspects of the dreams and aspirations that relate to ${input.selectedAreas[0]}. Ignore other areas.\n\n` +
       `Provide the response in the following JSON structure:\n` +
       `{\n` +
