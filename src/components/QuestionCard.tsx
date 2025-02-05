@@ -11,7 +11,7 @@ interface QuestionCardProps {
 
 const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: QuestionCardProps) => {
   return (
-    <Card className="max-w-2xl mx-auto p-8 animate-fade-in">
+    <Card className="max-w-4xl mx-auto p-8 animate-fade-in">
       <p className="text-lg text-secondary text-center mb-8">
         Take our Big Five personality assessment to understand yourself better
         and start the process of creating a personalized vision for your future.
