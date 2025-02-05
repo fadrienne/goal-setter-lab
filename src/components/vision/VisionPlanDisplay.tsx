@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { VisionPlan } from "@/utils/coreValues";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import VisionPlanPDF from './VisionPlanPDF';
+import { Download } from 'lucide-react';
 
 interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
@@ -10,6 +13,24 @@ interface VisionPlanDisplayProps {
 const VisionPlanDisplay = ({ visionPlan, onStartOver }: VisionPlanDisplayProps) => {
   return (
     <div className="space-y-8 animate-fade-in">
+      <div className="flex justify-end mb-4">
+        <PDFDownloadLink
+          document={<VisionPlanPDF visionPlan={visionPlan} />}
+          fileName="vision-plan.pdf"
+        >
+          {({ loading }) => (
+            <Button 
+              variant="outline"
+              className="flex items-center gap-2"
+              disabled={loading}
+            >
+              <Download className="w-4 h-4" />
+              {loading ? 'Preparing PDF...' : 'Export to PDF'}
+            </Button>
+          )}
+        </PDFDownloadLink>
+      </div>
+
       <Card className="bg-white shadow-lg">
         <CardHeader className="border-b bg-accent/50">
           <CardTitle className="text-2xl text-primary">Your SMART Goal</CardTitle>
