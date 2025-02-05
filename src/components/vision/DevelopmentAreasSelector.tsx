@@ -40,7 +40,7 @@ const DevelopmentAreasSelector = ({
         }}
       >
         {developmentAreas.map((area) => (
-          <div key={area} className="flex items-center space-x-3 p-4 border rounded-lg">
+          <div key={area} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-accent transition-colors">
             <RadioGroupItem value={area} id={area} />
             <Label htmlFor={area} className="text-sm font-medium leading-none cursor-pointer">
               {area}
