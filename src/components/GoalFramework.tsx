@@ -21,7 +21,7 @@ const GoalFramework = ({ trait }: GoalFrameworkProps) => {
           <div className="space-y-6">
             <div>
               <h3 className="font-semibold mb-2">Short-Term Goals</h3>
-              <ul className="list-disc pl-5 space-y-2">
+              <ul className="pl-5 space-y-2">
                 {framework.shortTermGoals.map((goal, index) => (
                   <li key={index}>{goal}</li>
                 ))}
@@ -30,7 +30,7 @@ const GoalFramework = ({ trait }: GoalFrameworkProps) => {
             
             <div>
               <h3 className="font-semibold mb-2">Long-Term Strategies</h3>
-              <ul className="list-disc pl-5 space-y-2">
+              <ul className="pl-5 space-y-2">
                 {framework.longTermStrategies.map((strategy, index) => (
                   <li key={index}>{strategy}</li>
                 ))}
@@ -39,7 +39,7 @@ const GoalFramework = ({ trait }: GoalFrameworkProps) => {
             
             <div>
               <h3 className="font-semibold mb-2">Areas for Development</h3>
-              <ul className="list-disc pl-5 space-y-2">
+              <ul className="pl-5 space-y-2">
                 {framework.developmentAreas.map((area, index) => (
                   <li key={index}>{area}</li>
                 ))}
