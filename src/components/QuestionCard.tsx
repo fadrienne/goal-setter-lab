@@ -32,9 +32,9 @@ const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: Quest
           ))}
         </div>
         
-        <div className="text-center text-sm text-gray-500">
+        <div className="flex justify-between text-sm text-gray-500">
           <span>Strongly Disagree</span>
-          <span className="float-right">Strongly Agree</span>
+          <span>Strongly Agree</span>
         </div>
       </div>
     </Card>
