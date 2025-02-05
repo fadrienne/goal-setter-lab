@@ -11,11 +11,11 @@ const Index = () => {
             className="mx-auto mb-8 w-48 h-auto"
           />
           <h1 className="text-4xl font-bold text-primary mb-4">
-            Discover Your Personality Profile
+            Discover Your Personality-Based Goal Setting Style
           </h1>
           <p className="text-lg text-secondary max-w-2xl mx-auto">
-            Take our comprehensive Big Five personality assessment to understand yourself better
-            and create a personalized vision for your future.
+            Take our Big Five personality assessment to understand yourself better
+            and start the process of creating a personalized vision for your future.
           </p>
         </div>
         <PersonalityTest />
