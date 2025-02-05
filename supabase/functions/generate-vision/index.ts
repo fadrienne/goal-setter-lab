@@ -1,4 +1,3 @@
-
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -57,7 +56,9 @@ serve(async (req) => {
       `  ]\n` +
       `}`;
 
+    console.log('System Prompt being sent to OpenAI:', systemPrompt);
     console.log('Making request to OpenAI API');
+    
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
