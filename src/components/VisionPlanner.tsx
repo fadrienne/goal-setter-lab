@@ -95,6 +95,7 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
       onGenerate={generatePlan}
       isGenerating={isGenerating}
       maxLength={MAX_DREAMS_LENGTH}
+      developmentArea={selectedAreas[0]}
     />
   );
 };

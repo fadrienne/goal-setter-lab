@@ -8,6 +8,7 @@ interface VisionInputSectionProps {
   onGenerate: () => void;
   isGenerating: boolean;
   maxLength: number;
+  developmentArea: string;
 }
 
 const VisionInputSection = ({
@@ -15,7 +16,8 @@ const VisionInputSection = ({
   onChange,
   onGenerate,
   isGenerating,
-  maxLength
+  maxLength,
+  developmentArea
 }: VisionInputSectionProps) => {
   return (
     <div className="space-y-8 animate-fade-in">
@@ -23,6 +25,7 @@ const VisionInputSection = ({
         value={personalDreams}
         onChange={onChange}
         maxLength={maxLength}
+        developmentArea={developmentArea}
       />
 
       <div className="mt-8 text-center">
