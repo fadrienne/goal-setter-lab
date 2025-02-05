@@ -13,6 +13,8 @@ interface VisionPlanDisplayProps {
 }
 
 const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }: VisionPlanDisplayProps) => {
+  const pdfFileName = `${developmentArea.replace(/\s+/g, '-').toLowerCase()}-goals-and-vision.pdf`;
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex justify-between mb-4">
@@ -26,15 +28,13 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
         </Button>
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
-          fileName="vision-plan.pdf"
-          className="inline-block"
+          fileName={pdfFileName}
         >
           {({ loading }) => (
             <Button 
               variant="outline"
               className="flex items-center gap-2"
               disabled={loading}
-              type="button"
             >
               <Download className="w-4 h-4" />
               {loading ? 'Preparing PDF...' : 'Export to PDF'}
