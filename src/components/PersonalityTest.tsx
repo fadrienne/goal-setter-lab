@@ -74,11 +74,6 @@ const PersonalityTest = () => {
           Back
         </Button>
       )}
-      {(isComplete || showDevelopmentAreas || showVisionPlanner) && (
-        <Button variant="outline" onClick={handleStartOver}>
-          Start Over
-        </Button>
-      )}
     </div>
   );
 
