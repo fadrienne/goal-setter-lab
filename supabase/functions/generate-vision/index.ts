@@ -24,7 +24,7 @@ serve(async (req) => {
     }
 
     const systemPrompt = 
-      `You are a professional life coach and vision planning expert. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n` +
+      `You are a top tier life coach and goals and vision planning expert helping me define a vision that feels deeply aligned with my purpose. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n` +
       `- Personality trait: ${input.personalityTrait}\n` +
       `- Focus area: ${input.selectedAreas[0]}\n` +
       `- Core values: ${input.coreValues.join(', ')}\n` +
