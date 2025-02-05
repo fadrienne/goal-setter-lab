@@ -15,6 +15,11 @@ const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: Quest
       <Progress value={progress} className="mb-8" />
       
       <div className="space-y-6">
+        <p className="text-lg text-secondary text-center mb-8">
+          Take our Big Five personality assessment to understand yourself better
+          and start the process of creating a personalized vision for your future.
+        </p>
+
         <h2 className="text-2xl font-semibold text-center">
           {questionText}
         </h2>
