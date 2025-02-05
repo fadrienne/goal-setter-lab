@@ -3,13 +3,16 @@ import { useQuestions } from "@/hooks/useQuestions";
 import PersonalityTestSection from "./test/PersonalityTestSection";
 import ResultsSection from "./results/ResultsSection";
 import VisionPlanner from "./VisionPlanner";
+import DevelopmentAreasSelector from "./vision/DevelopmentAreasSelector";
 import { calculateDominantTrait } from "@/utils/scoreCalculations";
 
 const PersonalityTest = () => {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [showDevelopmentAreas, setShowDevelopmentAreas] = useState(false);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
+  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const questions = useQuestions();
 
   const handleTestComplete = (testAnswers: Record<number, number>) => {
@@ -31,17 +34,40 @@ const PersonalityTest = () => {
 
   const handleCoreValuesComplete = () => {
     if (selectedValues.length === 3) {
-      setShowVisionPlanner(true);
+      setShowDevelopmentAreas(true);
     }
+  };
+
+  const handleAreaSelection = (area: string) => {
+    setSelectedAreas(prev => {
+      if (prev.includes(area)) {
+        return prev.filter(a => a !== area);
+      }
+      return [...prev, area];
+    });
+  };
+
+  const handleDevelopmentAreasComplete = () => {
+    setShowVisionPlanner(true);
   };
 
   if (showVisionPlanner) {
     const dominantTrait = calculateDominantTrait(questions, answers);
     return (
       <VisionPlanner 
-        selectedAreas={["Career Growth", "Personal Development"]} 
+        selectedAreas={selectedAreas}
         selectedValues={selectedValues}
         dominantTrait={dominantTrait}
+      />
+    );
+  }
+
+  if (showDevelopmentAreas) {
+    return (
+      <DevelopmentAreasSelector
+        selectedAreas={selectedAreas}
+        onAreaSelection={handleAreaSelection}
+        onContinue={handleDevelopmentAreasComplete}
       />
     );
   }
