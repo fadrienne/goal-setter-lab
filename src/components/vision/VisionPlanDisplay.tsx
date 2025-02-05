@@ -37,6 +37,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
               variant="outline"
               className="flex items-center gap-2"
               disabled={loading}
+              type="button"
             >
               <Download className="w-4 h-4" />
               {loading ? 'Preparing PDF...' : 'Export to PDF'}
