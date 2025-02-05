@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuestions } from "@/hooks/useQuestions";
 import PersonalityTestSection from "./test/PersonalityTestSection";
@@ -6,11 +7,14 @@ import VisionPlanner from "./VisionPlanner";
 import DevelopmentAreasSelector from "./vision/DevelopmentAreasSelector";
 import { calculateDominantTrait } from "@/utils/scoreCalculations";
 import { Button } from "./ui/button";
+import SelfReflectionForm, { type SelfReflectionFormData } from "./vision/SelfReflectionForm";
 
 const PersonalityTest = () => {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [showSelfReflection, setShowSelfReflection] = useState(false);
+  const [selfReflectionData, setSelfReflectionData] = useState<SelfReflectionFormData | null>(null);
   const [showDevelopmentAreas, setShowDevelopmentAreas] = useState(false);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
@@ -35,12 +39,17 @@ const PersonalityTest = () => {
 
   const handleCoreValuesComplete = () => {
     if (selectedValues.length === 3) {
-      setShowDevelopmentAreas(true);
+      setShowSelfReflection(true);
     }
   };
 
+  const handleSelfReflectionComplete = (data: SelfReflectionFormData) => {
+    setSelfReflectionData(data);
+    setShowDevelopmentAreas(true);
+  };
+
   const handleAreaSelection = (area: string) => {
-    setSelectedAreas([area]); // Only store one area
+    setSelectedAreas([area]);
   };
 
   const handleDevelopmentAreasComplete = () => {
@@ -52,24 +61,19 @@ const PersonalityTest = () => {
       setShowVisionPlanner(false);
     } else if (showDevelopmentAreas) {
       setShowDevelopmentAreas(false);
+      setShowSelfReflection(true);
+    } else if (showSelfReflection) {
+      setShowSelfReflection(false);
+      setSelfReflectionData(null);
     } else if (isComplete) {
       setIsComplete(false);
       setSelectedValues([]);
     }
   };
 
-  const handleStartOver = () => {
-    setAnswers({});
-    setIsComplete(false);
-    setSelectedValues([]);
-    setShowDevelopmentAreas(false);
-    setShowVisionPlanner(false);
-    setSelectedAreas([]);
-  };
-
   const renderNavigationButtons = () => (
     <div className="flex justify-center gap-4 mt-6">
-      {(isComplete || showDevelopmentAreas || showVisionPlanner) && (
+      {(isComplete || showSelfReflection || showDevelopmentAreas || showVisionPlanner) && (
         <Button variant="outline" onClick={handleBack}>
           Back
         </Button>
@@ -85,6 +89,7 @@ const PersonalityTest = () => {
           selectedAreas={selectedAreas}
           selectedValues={selectedValues}
           dominantTrait={dominantTrait}
+          selfReflectionData={selfReflectionData}
         />
         {renderNavigationButtons()}
       </>
@@ -99,6 +104,15 @@ const PersonalityTest = () => {
           onAreaSelection={handleAreaSelection}
           onContinue={handleDevelopmentAreasComplete}
         />
+        {renderNavigationButtons()}
+      </>
+    );
+  }
+
+  if (showSelfReflection) {
+    return (
+      <>
+        <SelfReflectionForm onSubmit={handleSelfReflectionComplete} />
         {renderNavigationButtons()}
       </>
     );

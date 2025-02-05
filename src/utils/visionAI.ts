@@ -1,11 +1,14 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { VisionPlan } from "./coreValues";
+import { type SelfReflectionFormData } from "@/components/vision/SelfReflectionForm";
 
 interface VisionInput {
   personalityTrait: string;
   selectedAreas: string[];
   coreValues: string[];
   personalDreams: string;
+  selfReflectionAnswers: SelfReflectionFormData | null;
 }
 
 export const generateAIVision = async (input: VisionInput): Promise<VisionPlan> => {

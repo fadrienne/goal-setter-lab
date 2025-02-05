@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { type VisionPlan } from "@/utils/coreValues";
 import { generateAIVision } from "@/utils/visionAI";
 import VisionPlanDisplay from "./vision/VisionPlanDisplay";
 import VisionInputSection from "./vision/VisionInputSection";
+import { type SelfReflectionFormData } from "./vision/SelfReflectionForm";
 
 interface VisionPlannerProps {
   selectedAreas: string[];
@@ -12,11 +14,12 @@ interface VisionPlannerProps {
     trait: string;
     score: number;
   };
+  selfReflectionData: SelfReflectionFormData | null;
 }
 
 const MAX_DREAMS_LENGTH = 2000;
 
-const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionPlannerProps) => {
+const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfReflectionData }: VisionPlannerProps) => {
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -50,7 +53,8 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
       personalityTrait: dominantTrait.trait,
       selectedAreas,
       selectedValues,
-      personalDreams
+      personalDreams,
+      selfReflectionData
     });
 
     try {
@@ -58,7 +62,8 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait }: VisionP
         personalityTrait: dominantTrait.trait,
         selectedAreas,
         coreValues: selectedValues,
-        personalDreams
+        personalDreams,
+        selfReflectionAnswers: selfReflectionData
       });
       
       console.log("Received vision plan:", aiVision);
