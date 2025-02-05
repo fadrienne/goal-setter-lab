@@ -8,13 +8,13 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } fr
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  currentSituation: z.string().min(10, "Please provide more detail about your current situation"),
-  challengesOpportunities: z.string().min(10, "Please describe your challenges and opportunities"),
-  attentionAreas: z.string().min(10, "Please specify which areas need attention"),
-  workLifeIntegration: z.string().min(10, "Please describe your ideal work-life integration"),
-  desiredSkills: z.string().min(10, "Please list the skills you want to develop"),
-  habits: z.string().min(10, "Please describe the habits you want to build or break"),
-  communityImpact: z.string().min(10, "Please explain how you want to make a difference"),
+  currentSituation: z.string().min(10, "Where are you now in your personal and professional life?"),
+  challengesOpportunities: z.string().min(10, "What are your current biggest challenges and opportunities?"),
+  attentionAreas: z.string().min(10, "Which areas of your life currently need the most attention?"),
+  workLifeIntegration: z.string().min(10, "What does an ideal work-life integration look like for you?"),
+  desiredSkills: z.string().min(10, "What skills or capabilities do you want to develop?"),
+  habits: z.string().min(10, "What habits would you like to build or break?"),
+  communityImpact: z.string().min(10, "How do you want to make a difference in your community or industry?"),
 });
 
 export type SelfReflectionFormData = z.infer<typeof formSchema>;
@@ -40,7 +40,7 @@ const SelfReflectionForm = ({ onSubmit }: SelfReflectionFormProps) => {
   return (
     <Card className="w-full max-w-3xl mx-auto">
       <CardHeader>
-        <CardTitle>Self-Reflection Questionnaire</CardTitle>
+        <CardTitle>Self-Reflection Questions</CardTitle>
         <CardDescription>
           Take a moment to reflect on these questions. Your answers will help shape your personalized vision and goals.
         </CardDescription>
