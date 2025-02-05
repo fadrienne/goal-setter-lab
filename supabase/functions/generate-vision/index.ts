@@ -24,29 +24,29 @@ serve(async (req) => {
     }
 
     const systemPrompt = 
-      "You are a professional life coach and vision planning expert. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n" +
-      "- Personality trait: " + input.personalityTrait + "\n" +
-      "- Focus area: " + input.selectedAreas[0] + "\n" +
-      "- Core values: " + input.coreValues.join(', ') + "\n" +
-      "- Personal dreams: " + input.personalDreams + "\n\n" +
-      "IMPORTANT: Extract and focus ONLY on the aspects of the dreams and aspirations that relate to " + input.selectedAreas[0] + ". Ignore other areas.\n\n" +
-      "Provide the response in the following JSON structure:\n" +
-      "{\n" +
-      '  "smartGoal": {\n' +
-      '    "specific": "string - related to ' + input.selectedAreas[0] + '",\n' +
-      '    "measurable": "string",\n' +
-      '    "achievable": "string",\n' +
-      '    "relevant": "string",\n' +
-      '    "timeBound": "string"\n' +
-      "  },\n" +
-      '  "fiveYearVision": "string - focused on ' + input.selectedAreas[0] + '",\n' +
-      '  "yearlyMilestones": [\n' +
-      "    {\n" +
-      '      "year": 1,\n' +
-      '      "goals": ["string - all goals must relate to ' + input.selectedAreas[0] + '"]\n' +
-      "    }\n" +
-      "  ]\n" +
-      "}";
+      `You are a professional life coach and vision planning expert. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n` +
+      `- Personality trait: ${input.personalityTrait}\n` +
+      `- Focus area: ${input.selectedAreas[0]}\n` +
+      `- Core values: ${input.coreValues.join(', ')}\n` +
+      `- Personal dreams: ${input.personalDreams}\n\n` +
+      `IMPORTANT: Extract and focus ONLY on the aspects of the dreams and aspirations that relate to ${input.selectedAreas[0]}. Ignore other areas.\n\n` +
+      `Provide the response in the following JSON structure:\n` +
+      `{\n` +
+      `  "smartGoal": {\n` +
+      `    "specific": "string - related to ${input.selectedAreas[0]}",\n` +
+      `    "measurable": "string",\n` +
+      `    "achievable": "string",\n` +
+      `    "relevant": "string",\n` +
+      `    "timeBound": "string"\n` +
+      `  },\n` +
+      `  "fiveYearVision": "string - focused on ${input.selectedAreas[0]}",\n` +
+      `  "yearlyMilestones": [\n` +
+      `    {\n` +
+      `      "year": 1,\n` +
+      `      "goals": ["string - all goals must relate to ${input.selectedAreas[0]}"]\n` +
+      `    }\n` +
+      `  ]\n` +
+      `}`;
 
     console.log('Making request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
