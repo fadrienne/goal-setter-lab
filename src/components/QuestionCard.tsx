@@ -19,22 +19,24 @@ const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: Quest
           {questionText}
         </h2>
         
-        <div className="grid grid-cols-5 gap-4">
-          {[1, 2, 3, 4, 5].map((value) => (
-            <Button
-              key={value}
-              variant={currentAnswer === value ? "default" : "outline"}
-              onClick={() => onAnswer(value)}
-              className="w-full py-6"
-            >
-              {value}
-            </Button>
-          ))}
-        </div>
-        
-        <div className="flex justify-between text-sm text-gray-500">
-          <span>Strongly Disagree</span>
-          <span>Strongly Agree</span>
+        <div className="space-y-4">
+          <div className="flex justify-between text-sm text-gray-500 px-2">
+            <span>Strongly Disagree</span>
+            <span>Strongly Agree</span>
+          </div>
+          
+          <div className="grid grid-cols-5 gap-4">
+            {[1, 2, 3, 4, 5].map((value) => (
+              <Button
+                key={value}
+                variant={currentAnswer === value ? "default" : "outline"}
+                onClick={() => onAnswer(value)}
+                className="w-full py-6"
+              >
+                {value}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
     </Card>
