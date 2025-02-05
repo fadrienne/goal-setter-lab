@@ -8,7 +8,7 @@ interface VisionInputSectionProps {
   onGenerate: () => void;
   isGenerating: boolean;
   maxLength: number;
-  developmentArea: string;
+  developmentArea?: string;
 }
 
 const VisionInputSection = ({

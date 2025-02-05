@@ -5,23 +5,23 @@ interface DreamsInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   maxLength: number;
-  developmentArea: string;
+  developmentArea?: string;
 }
 
-const DreamsInput = ({ value, onChange, maxLength, developmentArea }: DreamsInputProps) => {
+const DreamsInput = ({ value, onChange, maxLength, developmentArea = "Personal" }: DreamsInputProps) => {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Share Your {developmentArea} Dreams</CardTitle>
         <CardDescription>
-          Tell us about your aspirations, dreams, and what you envision for your future in {developmentArea.toLowerCase()}.
+          Tell us about your aspirations, dreams, and what you envision for your future{developmentArea && ` in ${developmentArea.toLowerCase()}`}.
           Maximum {maxLength} characters.
           ({maxLength - value.length} characters remaining)
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Textarea
-          placeholder={`Describe your dreams and aspirations for ${developmentArea.toLowerCase()}...`}
+          placeholder={`Describe your dreams and aspirations${developmentArea ? ` for ${developmentArea.toLowerCase()}` : ''}...`}
           value={value}
           onChange={onChange}
           className="min-h-[200px]"
