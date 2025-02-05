@@ -39,12 +39,7 @@ const PersonalityTest = () => {
   };
 
   const handleAreaSelection = (area: string) => {
-    setSelectedAreas(prev => {
-      if (prev.includes(area)) {
-        return prev.filter(a => a !== area);
-      }
-      return [...prev, area];
-    });
+    setSelectedAreas([area]); // Only store one area
   };
 
   const handleDevelopmentAreasComplete = () => {

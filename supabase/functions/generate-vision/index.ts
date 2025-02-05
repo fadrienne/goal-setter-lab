@@ -9,7 +9,6 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -25,25 +24,26 @@ serve(async (req) => {
     }
 
     const systemPrompt = 
-      "You are a professional life coach and vision planning expert. Create a personalized 5-year vision plan based on the following information:\n\n" +
+      "You are a professional life coach and vision planning expert. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n" +
       "- Personality trait: " + input.personalityTrait + "\n" +
-      "- Focus areas: " + input.selectedAreas.join(', ') + "\n" +
+      "- Focus area: " + input.selectedAreas[0] + "\n" +
       "- Core values: " + input.coreValues.join(', ') + "\n" +
       "- Personal dreams: " + input.personalDreams + "\n\n" +
+      "IMPORTANT: Extract and focus ONLY on the aspects of the dreams and aspirations that relate to " + input.selectedAreas[0] + ". Ignore other areas.\n\n" +
       "Provide the response in the following JSON structure:\n" +
       "{\n" +
       '  "smartGoal": {\n' +
-      '    "specific": "string",\n' +
+      '    "specific": "string - related to ' + input.selectedAreas[0] + '",\n' +
       '    "measurable": "string",\n' +
       '    "achievable": "string",\n' +
       '    "relevant": "string",\n' +
       '    "timeBound": "string"\n' +
       "  },\n" +
-      '  "fiveYearVision": "string",\n' +
+      '  "fiveYearVision": "string - focused on ' + input.selectedAreas[0] + '",\n' +
       '  "yearlyMilestones": [\n' +
       "    {\n" +
       '      "year": 1,\n' +
-      '      "goals": ["string"]\n' +
+      '      "goals": ["string - all goals must relate to ' + input.selectedAreas[0] + '"]\n' +
       "    }\n" +
       "  ]\n" +
       "}";
@@ -64,7 +64,7 @@ serve(async (req) => {
           },
           {
             role: 'user',
-            content: 'Generate a structured vision plan based on the provided information.'
+            content: 'Generate a focused vision plan for the specified area only.'
           }
         ],
         temperature: 0.7,
