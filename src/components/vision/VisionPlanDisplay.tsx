@@ -30,7 +30,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
           document={<VisionPlanPDF visionPlan={visionPlan} />}
           fileName={pdfFileName}
         >
-          {({ loading }) => (
+          {({ loading }: { loading: boolean }) => (
             <Button 
               variant="outline"
               className="flex items-center gap-2"
