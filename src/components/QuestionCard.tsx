@@ -12,24 +12,19 @@ interface QuestionCardProps {
 const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: QuestionCardProps) => {
   return (
     <Card className="max-w-2xl mx-auto p-8 animate-fade-in">
+      <p className="text-lg text-secondary text-center mb-8">
+        Take our Big Five personality assessment to understand yourself better
+        and start the process of creating a personalized vision for your future.
+      </p>
+      
       <Progress value={progress} className="mb-8" />
       
       <div className="space-y-6">
-        <p className="text-lg text-secondary text-center mb-8">
-          Take our Big Five personality assessment to understand yourself better
-          and start the process of creating a personalized vision for your future.
-        </p>
-
         <h2 className="text-2xl font-semibold text-center">
           {questionText}
         </h2>
         
         <div className="space-y-4">
-          <div className="flex justify-between text-sm text-gray-500 px-2">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
-          </div>
-          
           <div className="grid grid-cols-5 gap-4">
             {[1, 2, 3, 4, 5].map((value) => (
               <Button
@@ -41,6 +36,11 @@ const QuestionCard = ({ questionText, currentAnswer, onAnswer, progress }: Quest
                 {value}
               </Button>
             ))}
+          </div>
+          
+          <div className="flex justify-between text-sm text-gray-500 px-2">
+            <span>Strongly Disagree</span>
+            <span>Strongly Agree</span>
           </div>
         </div>
       </div>
