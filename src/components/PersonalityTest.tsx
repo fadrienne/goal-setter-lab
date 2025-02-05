@@ -5,6 +5,7 @@ import ResultsSection from "./results/ResultsSection";
 import VisionPlanner from "./VisionPlanner";
 import DevelopmentAreasSelector from "./vision/DevelopmentAreasSelector";
 import { calculateDominantTrait } from "@/utils/scoreCalculations";
+import { Button } from "./ui/button";
 
 const PersonalityTest = () => {
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -46,36 +47,80 @@ const PersonalityTest = () => {
     setShowVisionPlanner(true);
   };
 
+  const handleBack = () => {
+    if (showVisionPlanner) {
+      setShowVisionPlanner(false);
+    } else if (showDevelopmentAreas) {
+      setShowDevelopmentAreas(false);
+    } else if (isComplete) {
+      setIsComplete(false);
+      setSelectedValues([]);
+    }
+  };
+
+  const handleStartOver = () => {
+    setAnswers({});
+    setIsComplete(false);
+    setSelectedValues([]);
+    setShowDevelopmentAreas(false);
+    setShowVisionPlanner(false);
+    setSelectedAreas([]);
+  };
+
+  const renderNavigationButtons = () => (
+    <div className="flex justify-center gap-4 mt-6">
+      {(isComplete || showDevelopmentAreas || showVisionPlanner) && (
+        <Button variant="outline" onClick={handleBack}>
+          Back
+        </Button>
+      )}
+      {(isComplete || showDevelopmentAreas || showVisionPlanner) && (
+        <Button variant="outline" onClick={handleStartOver}>
+          Start Over
+        </Button>
+      )}
+    </div>
+  );
+
   if (showVisionPlanner) {
     const dominantTrait = calculateDominantTrait(questions, answers);
     return (
-      <VisionPlanner 
-        selectedAreas={selectedAreas}
-        selectedValues={selectedValues}
-        dominantTrait={dominantTrait}
-      />
+      <>
+        <VisionPlanner 
+          selectedAreas={selectedAreas}
+          selectedValues={selectedValues}
+          dominantTrait={dominantTrait}
+        />
+        {renderNavigationButtons()}
+      </>
     );
   }
 
   if (showDevelopmentAreas) {
     return (
-      <DevelopmentAreasSelector
-        selectedAreas={selectedAreas}
-        onAreaSelection={handleAreaSelection}
-        onContinue={handleDevelopmentAreasComplete}
-      />
+      <>
+        <DevelopmentAreasSelector
+          selectedAreas={selectedAreas}
+          onAreaSelection={handleAreaSelection}
+          onContinue={handleDevelopmentAreasComplete}
+        />
+        {renderNavigationButtons()}
+      </>
     );
   }
 
   if (isComplete) {
     return (
-      <ResultsSection
-        answers={answers}
-        questions={questions}
-        selectedValues={selectedValues}
-        onValueSelection={handleValueSelection}
-        onComplete={handleCoreValuesComplete}
-      />
+      <>
+        <ResultsSection
+          answers={answers}
+          questions={questions}
+          selectedValues={selectedValues}
+          onValueSelection={handleValueSelection}
+          onComplete={handleCoreValuesComplete}
+        />
+        {renderNavigationButtons()}
+      </>
     );
   }
 
