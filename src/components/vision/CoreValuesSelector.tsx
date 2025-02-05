@@ -10,7 +10,7 @@ interface CoreValuesSelectorProps {
 const CoreValuesSelector = ({ selectedValues, onValueSelection }: CoreValuesSelectorProps) => {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="text-center">
         <CardTitle>Select Your Core Values</CardTitle>
         <CardDescription>
           Choose 3 values that resonate most with your personal and professional aspirations.
