@@ -13,7 +13,8 @@ interface VisionPlanDisplayProps {
 }
 
 const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }: VisionPlanDisplayProps) => {
-  const pdfFileName = `${developmentArea.replace(/\s+/g, '-').toLowerCase()}-goals-and-vision.pdf`;
+  const formattedArea = developmentArea.replace(/\s+/g, '-').toLowerCase();
+  const pdfFileName = `${formattedArea}-goals-and-vision.pdf`;
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -29,9 +30,8 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
           fileName={pdfFileName}
-          className="inline-block"
         >
-          {({ loading }) => (
+          {({ blob, url, loading, error }) => (
             <Button 
               variant="outline"
               className="flex items-center gap-2"
