@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { type VisionPlan } from "@/utils/coreValues";
@@ -23,6 +22,7 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const { toast } = useToast();
 
   const handleDreamsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -68,6 +68,7 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
       
       console.log("Received vision plan:", aiVision);
       setVisionPlan(aiVision);
+      setIsEditing(false);
       toast({
         title: "Vision Plan Generated",
         description: "Your personalized vision plan has been created successfully!"
@@ -84,11 +85,16 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
     }
   };
 
-  if (visionPlan) {
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  if (visionPlan && !isEditing) {
     return (
       <VisionPlanDisplay 
         visionPlan={visionPlan} 
-        onStartOver={() => setVisionPlan(null)} 
+        onStartOver={() => setVisionPlan(null)}
+        onEdit={handleEdit}
       />
     );
   }
@@ -101,6 +107,7 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
       isGenerating={isGenerating}
       maxLength={MAX_DREAMS_LENGTH}
       developmentArea={selectedAreas[0]}
+      isEditing={isEditing}
     />
   );
 };

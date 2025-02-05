@@ -3,17 +3,26 @@ import { Button } from "@/components/ui/button";
 import { VisionPlan } from "@/utils/coreValues";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import VisionPlanPDF from './VisionPlanPDF';
-import { Download } from 'lucide-react';
+import { Download, Edit } from 'lucide-react';
 
 interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
   onStartOver: () => void;
+  onEdit: () => void;
 }
 
-const VisionPlanDisplay = ({ visionPlan, onStartOver }: VisionPlanDisplayProps) => {
+const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit }: VisionPlanDisplayProps) => {
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between mb-4">
+        <Button 
+          variant="outline"
+          className="flex items-center gap-2"
+          onClick={onEdit}
+        >
+          <Edit className="w-4 h-4" />
+          Edit Vision
+        </Button>
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
           fileName="vision-plan.pdf"

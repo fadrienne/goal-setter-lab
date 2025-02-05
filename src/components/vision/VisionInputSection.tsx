@@ -9,6 +9,7 @@ interface VisionInputSectionProps {
   isGenerating: boolean;
   maxLength: number;
   developmentArea?: string;
+  isEditing?: boolean;
 }
 
 const VisionInputSection = ({
@@ -17,7 +18,8 @@ const VisionInputSection = ({
   onGenerate,
   isGenerating,
   maxLength,
-  developmentArea
+  developmentArea,
+  isEditing
 }: VisionInputSectionProps) => {
   return (
     <div className="space-y-8 animate-fade-in">
@@ -40,7 +42,7 @@ const VisionInputSection = ({
               Generating Your Vision Plan...
             </>
           ) : (
-            'Generate Your Vision Plan'
+            isEditing ? 'Update Vision Plan' : 'Generate Your Vision Plan'
           )}
         </Button>
       </div>
