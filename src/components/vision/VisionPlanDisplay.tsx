@@ -3,29 +3,32 @@ import { Button } from "@/components/ui/button";
 import { VisionPlan } from "@/utils/coreValues";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import VisionPlanPDF from './VisionPlanPDF';
-import { Download, Edit } from 'lucide-react';
+import { Download, ArrowLeft } from 'lucide-react';
 
 interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
   onStartOver: () => void;
   onEdit: () => void;
+  developmentArea: string;
 }
 
-const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit }: VisionPlanDisplayProps) => {
+const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }: VisionPlanDisplayProps) => {
+  const pdfFileName = `${developmentArea.replace(/\s+/g, '-').toLowerCase()}-goals-and-vision.pdf`;
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex justify-between mb-4">
         <Button 
           variant="outline"
           className="flex items-center gap-2"
-          onClick={onEdit}
+          onClick={onStartOver}
         >
-          <Edit className="w-4 h-4" />
-          Edit Vision
+          <ArrowLeft className="w-4 h-4" />
+          Choose another Development Area
         </Button>
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
-          fileName="vision-plan.pdf"
+          fileName={pdfFileName}
         >
           {({ loading }) => (
             <Button 

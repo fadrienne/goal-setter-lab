@@ -95,6 +95,7 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
         visionPlan={visionPlan} 
         onStartOver={() => setVisionPlan(null)}
         onEdit={handleEdit}
+        developmentArea={selectedAreas[0]}
       />
     );
   }
