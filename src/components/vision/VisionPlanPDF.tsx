@@ -36,13 +36,14 @@ const styles = StyleSheet.create({
 
 interface VisionPlanPDFProps {
   visionPlan: VisionPlan;
+  developmentArea: string;
 }
 
-const VisionPlanPDF = ({ visionPlan }: VisionPlanPDFProps) => (
+const VisionPlanPDF = ({ visionPlan, developmentArea }: VisionPlanPDFProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.title}>Your SMART Goal</Text>
+        <Text style={styles.title}>Your {developmentArea} SMART Goal</Text>
         <View style={styles.smartSection}>
           <Text style={styles.text}>Specific: {visionPlan.smartGoal.specific}</Text>
           <Text style={styles.text}>Measurable: {visionPlan.smartGoal.measurable}</Text>
@@ -53,7 +54,7 @@ const VisionPlanPDF = ({ visionPlan }: VisionPlanPDFProps) => (
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.title}>Your 5-Year Vision</Text>
+        <Text style={styles.title}>Your {developmentArea} 5-Year Vision</Text>
         <Text style={styles.text}>{visionPlan.fiveYearVision}</Text>
       </View>
 

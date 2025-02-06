@@ -27,7 +27,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
           Back to Core Values
         </Button>
         <PDFDownloadLink
-          document={<VisionPlanPDF visionPlan={visionPlan} />}
+          document={<VisionPlanPDF visionPlan={visionPlan} developmentArea={developmentArea} />}
           fileName={pdfFileName}
         >
           {({ loading }) => (
