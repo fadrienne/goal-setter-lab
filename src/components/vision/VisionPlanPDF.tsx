@@ -32,16 +32,53 @@ const styles = StyleSheet.create({
   milestone: {
     marginBottom: 15,
   },
+  traitScore: {
+    marginBottom: 10,
+  },
+  coreValues: {
+    marginBottom: 15,
+  },
 });
 
 interface VisionPlanPDFProps {
   visionPlan: VisionPlan;
   developmentArea: string;
+  traitScores: {
+    trait: string;
+    score: number;
+  }[];
+  dominantTrait: {
+    trait: string;
+    score: number;
+  };
 }
 
-const VisionPlanPDF = ({ visionPlan, developmentArea }: VisionPlanPDFProps) => (
+const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores, dominantTrait }: VisionPlanPDFProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <View style={styles.section}>
+        <Text style={styles.title}>Your Personality Profile</Text>
+        <Text style={styles.text}>
+          Your dominant trait is {dominantTrait.trait.charAt(0).toUpperCase() + dominantTrait.trait.slice(1)} with a score of {dominantTrait.score}
+        </Text>
+        {traitScores.map((score) => (
+          <View key={score.trait} style={styles.traitScore}>
+            <Text style={styles.text}>
+              {score.trait.charAt(0).toUpperCase() + score.trait.slice(1)}: {score.score}/5
+            </Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.title}>Your Core Values</Text>
+        <View style={styles.coreValues}>
+          {visionPlan.coreValues.map((value, index) => (
+            <Text key={index} style={styles.text}>• {value}</Text>
+          ))}
+        </View>
+      </View>
+
       <View style={styles.section}>
         <Text style={styles.title}>Your {developmentArea} SMART Goal</Text>
         <View style={styles.smartSection}>
