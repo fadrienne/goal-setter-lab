@@ -2,18 +2,21 @@ import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/rendere
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
 
-// Register Montserrat font for PDF
+// Register fonts with correct paths and formats
 Font.register({
   family: 'Montserrat',
-  src: '/fonts/Montserrat-Regular.ttf',
   fonts: [
     {
-      src: '/fonts/Montserrat-Bold.ttf',
-      fontWeight: 'bold',
+      src: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXp-p7K4KLg.ttf',
+      fontWeight: 'normal',
     },
     {
-      src: '/fonts/Montserrat-Medium.ttf',
+      src: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCuM73w5aXp-p7K4KLg.ttf',
       fontWeight: 'medium',
+    },
+    {
+      src: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCvr6Hw5aXp-p7K4KLg.ttf',
+      fontWeight: 'bold',
     },
   ],
 });
