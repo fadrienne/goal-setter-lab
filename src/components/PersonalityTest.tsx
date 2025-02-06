@@ -58,6 +58,7 @@ const PersonalityTest = () => {
   const handleBack = () => {
     if (showVisionPlanner) {
       setShowVisionPlanner(false);
+      setShowDevelopmentAreas(true);
     } else if (showDevelopmentAreas) {
       setShowDevelopmentAreas(false);
       setShowSelfReflection(true);
@@ -68,6 +69,13 @@ const PersonalityTest = () => {
       setIsComplete(false);
       setSelectedValues([]);
     }
+  };
+
+  const handleBackToCoreValues = () => {
+    setShowVisionPlanner(false);
+    setShowDevelopmentAreas(false);
+    setShowSelfReflection(false);
+    setSelfReflectionData(null);
   };
 
   const renderNavigationButtons = () => (
@@ -95,6 +103,7 @@ const PersonalityTest = () => {
           dominantTrait={dominantTrait}
           traitScores={traitScores}
           selfReflectionData={selfReflectionData}
+          onBackToCoreValues={handleBackToCoreValues}
         />
         {renderNavigationButtons()}
       </>

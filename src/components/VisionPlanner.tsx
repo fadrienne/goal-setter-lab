@@ -18,6 +18,7 @@ interface VisionPlannerProps {
     score: number;
   }[];
   selfReflectionData: SelfReflectionFormData | null;
+  onBackToCoreValues: () => void;
 }
 
 const MAX_DREAMS_LENGTH = 2000;
@@ -27,7 +28,8 @@ const VisionPlanner = ({
   selectedValues, 
   dominantTrait,
   traitScores, 
-  selfReflectionData 
+  selfReflectionData,
+  onBackToCoreValues 
 }: VisionPlannerProps) => {
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
@@ -103,7 +105,7 @@ const VisionPlanner = ({
     return (
       <VisionPlanDisplay 
         visionPlan={visionPlan} 
-        onStartOver={() => setVisionPlan(null)}
+        onStartOver={onBackToCoreValues}
         onEdit={handleEdit}
         developmentArea={selectedAreas[0]}
         traitScores={traitScores}
