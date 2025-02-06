@@ -14,10 +14,12 @@ const developmentAreas = [
   "Personal Development",
   "Relationships",
   "Health & Wellness",
-  "Financial Goals",
-  "Learning & Education",
+  "Finances",
+  "Personal Growth & Learning",
   "Community Impact",
-  "Creative Expression"
+  "Creative Expression",
+  "Life",
+  "Innovation & Enterprise"
 ];
 
 const DevelopmentAreasSelector = ({ 

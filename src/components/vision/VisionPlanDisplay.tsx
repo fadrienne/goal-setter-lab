@@ -13,7 +13,7 @@ interface VisionPlanDisplayProps {
 }
 
 const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }: VisionPlanDisplayProps) => {
-  const pdfFileName = `${developmentArea.replace(/\s+/g, '-').toLowerCase()}-goals-and-vision.pdf`;
+  const pdfFileName = `${developmentArea.replace(/\s+/g, '-').toLowerCase()}-vision-plan.pdf`;
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -24,7 +24,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
           onClick={onStartOver}
         >
           <ArrowLeft className="w-4 h-4" />
-          Choose another Development Area
+          Back to Core Values
         </Button>
         <PDFDownloadLink
           document={<VisionPlanPDF visionPlan={visionPlan} />}
@@ -113,7 +113,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
           onClick={onStartOver}
           className="bg-primary hover:bg-primary/90 text-white px-8 py-2"
         >
-          Start Over
+          Back to Core Values
         </Button>
       </div>
     </div>
