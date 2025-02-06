@@ -109,7 +109,7 @@ const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores = [], dominant
         <View style={styles.section}>
           <Text style={styles.title}>Your Core Values</Text>
           <View style={styles.coreValues}>
-            {visionPlan?.coreValues?.map((value, index) => (
+            {visionPlan.coreValues?.map((value, index) => (
               <Text key={index} style={styles.text}>• {value}</Text>
             ))}
           </View>
@@ -118,25 +118,25 @@ const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores = [], dominant
         <View style={styles.section}>
           <Text style={styles.title}>Your {developmentArea} SMART Goal</Text>
           <View style={styles.smartSection}>
-            <Text style={styles.text}>Specific: {visionPlan?.smartGoal?.specific}</Text>
-            <Text style={styles.text}>Measurable: {visionPlan?.smartGoal?.measurable}</Text>
-            <Text style={styles.text}>Achievable: {visionPlan?.smartGoal?.achievable}</Text>
-            <Text style={styles.text}>Relevant: {visionPlan?.smartGoal?.relevant}</Text>
-            <Text style={styles.text}>Time-Bound: {visionPlan?.smartGoal?.timeBound}</Text>
+            <Text style={styles.text}>Specific: {visionPlan.smartGoal.specific}</Text>
+            <Text style={styles.text}>Measurable: {visionPlan.smartGoal.measurable}</Text>
+            <Text style={styles.text}>Achievable: {visionPlan.smartGoal.achievable}</Text>
+            <Text style={styles.text}>Relevant: {visionPlan.smartGoal.relevant}</Text>
+            <Text style={styles.text}>Time-Bound: {visionPlan.smartGoal.timeBound}</Text>
           </View>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.title}>Your {developmentArea} 5-Year Vision</Text>
-          <Text style={styles.text}>{visionPlan?.fiveYearVision}</Text>
+          <Text style={styles.text}>{visionPlan.fiveYearVision}</Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.subtitle}>Yearly Milestones</Text>
-          {visionPlan?.yearlyMilestones?.map((milestone) => (
+          {visionPlan.yearlyMilestones.map((milestone) => (
             <View key={milestone.year} style={styles.milestone}>
               <Text style={styles.text}>Year {milestone.year}:</Text>
-              {milestone.goals?.map((goal, index) => (
+              {milestone.goals.map((goal, index) => (
                 <Text key={index} style={styles.text}>• {goal}</Text>
               ))}
             </View>
