@@ -32,7 +32,37 @@ const VisionPlanDisplay = ({
 }: VisionPlanDisplayProps) => {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   const pdfFileName = `${developmentArea.toLowerCase().replace(/\s+/g, '-')}-vision-plan.pdf`;
+
+  const handlePdfGeneration = (loading: boolean, error: Error | null) => {
+    if (error) {
+      console.error('PDF Generation Error:', error);
+      setPdfError(error.message);
+      toast({
+        title: "Error",
+        description: "There was an error generating your PDF. Please try again.",
+        variant: "destructive",
+      });
+      setIsGenerating(false);
+      return;
+    }
+
+    if (loading && !isGenerating) {
+      setIsGenerating(true);
+      setPdfError(null);
+      toast({
+        title: "Generating PDF",
+        description: "Your PDF is being generated...",
+      });
+    } else if (!loading && isGenerating) {
+      setIsGenerating(false);
+      toast({
+        title: "PDF Ready",
+        description: "Your PDF has been generated and is ready to download.",
+      });
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -53,39 +83,19 @@ const VisionPlanDisplay = ({
             />
           }
           fileName={pdfFileName}
+          className="inline-block"
         >
           {({ loading, error }) => {
-            if (loading && !isGenerating) {
-              setIsGenerating(true);
-              toast({
-                title: "Generating PDF",
-                description: "Your PDF is being generated...",
-              });
-            }
-            
-            if (!loading && isGenerating) {
-              setIsGenerating(false);
-              toast({
-                title: "PDF Ready",
-                description: "Your PDF has been generated and is ready to download.",
-              });
-            }
-
-            if (error) {
-              toast({
-                title: "Error",
-                description: "There was an error generating your PDF. Please try again.",
-                variant: "destructive",
-              });
-            }
-
+            handlePdfGeneration(loading, error);
             return (
-              <Button disabled={loading}>
+              <Button disabled={loading || !!pdfError}>
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Generating PDF...
                   </>
+                ) : pdfError ? (
+                  "Error - Try Again"
                 ) : (
                   "Download PDF"
                 )}
