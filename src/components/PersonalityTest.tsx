@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useQuestions } from "@/hooks/useQuestions";
 import PersonalityTestSection from "./test/PersonalityTestSection";
 import ResultsSection from "./results/ResultsSection";
 import VisionPlanner from "./VisionPlanner";
 import DevelopmentAreasSelector from "./vision/DevelopmentAreasSelector";
-import { calculateDominantTrait } from "@/utils/scoreCalculations";
+import { calculateDominantTrait, calculateTraitScore } from "@/utils/scoreCalculations";
 import { Button } from "./ui/button";
 import SelfReflectionForm, { type SelfReflectionFormData } from "./vision/SelfReflectionForm";
 
@@ -83,12 +82,18 @@ const PersonalityTest = () => {
 
   if (showVisionPlanner) {
     const dominantTrait = calculateDominantTrait(questions, answers);
+    const traitScores = ["extraversion", "agreeableness", "conscientiousness", "neuroticism", "openness"].map(trait => ({
+      trait,
+      score: calculateTraitScore(questions, answers, trait)
+    }));
+
     return (
       <>
         <VisionPlanner 
           selectedAreas={selectedAreas}
           selectedValues={selectedValues}
           dominantTrait={dominantTrait}
+          traitScores={traitScores}
           selfReflectionData={selfReflectionData}
         />
         {renderNavigationButtons()}

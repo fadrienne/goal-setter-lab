@@ -53,15 +53,15 @@ interface VisionPlanPDFProps {
   };
 }
 
-const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores, dominantTrait }: VisionPlanPDFProps) => (
+const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores = [], dominantTrait }: VisionPlanPDFProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
         <Text style={styles.title}>Your Personality Profile</Text>
         <Text style={styles.text}>
-          Your dominant trait is {dominantTrait.trait.charAt(0).toUpperCase() + dominantTrait.trait.slice(1)} with a score of {dominantTrait.score}
+          Your dominant trait is {dominantTrait?.trait?.charAt(0).toUpperCase() + dominantTrait?.trait?.slice(1)} with a score of {dominantTrait?.score}
         </Text>
-        {traitScores.map((score) => (
+        {Array.isArray(traitScores) && traitScores.map((score) => (
           <View key={score.trait} style={styles.traitScore}>
             <Text style={styles.text}>
               {score.trait.charAt(0).toUpperCase() + score.trait.slice(1)}: {score.score}/5
@@ -73,7 +73,7 @@ const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores, dominantTrait
       <View style={styles.section}>
         <Text style={styles.title}>Your Core Values</Text>
         <View style={styles.coreValues}>
-          {visionPlan.coreValues.map((value, index) => (
+          {Array.isArray(visionPlan?.coreValues) && visionPlan.coreValues.map((value, index) => (
             <Text key={index} style={styles.text}>• {value}</Text>
           ))}
         </View>
@@ -82,25 +82,25 @@ const VisionPlanPDF = ({ visionPlan, developmentArea, traitScores, dominantTrait
       <View style={styles.section}>
         <Text style={styles.title}>Your {developmentArea} SMART Goal</Text>
         <View style={styles.smartSection}>
-          <Text style={styles.text}>Specific: {visionPlan.smartGoal.specific}</Text>
-          <Text style={styles.text}>Measurable: {visionPlan.smartGoal.measurable}</Text>
-          <Text style={styles.text}>Achievable: {visionPlan.smartGoal.achievable}</Text>
-          <Text style={styles.text}>Relevant: {visionPlan.smartGoal.relevant}</Text>
-          <Text style={styles.text}>Time-Bound: {visionPlan.smartGoal.timeBound}</Text>
+          <Text style={styles.text}>Specific: {visionPlan?.smartGoal?.specific}</Text>
+          <Text style={styles.text}>Measurable: {visionPlan?.smartGoal?.measurable}</Text>
+          <Text style={styles.text}>Achievable: {visionPlan?.smartGoal?.achievable}</Text>
+          <Text style={styles.text}>Relevant: {visionPlan?.smartGoal?.relevant}</Text>
+          <Text style={styles.text}>Time-Bound: {visionPlan?.smartGoal?.timeBound}</Text>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.title}>Your {developmentArea} 5-Year Vision</Text>
-        <Text style={styles.text}>{visionPlan.fiveYearVision}</Text>
+        <Text style={styles.text}>{visionPlan?.fiveYearVision}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.subtitle}>Yearly Milestones</Text>
-        {visionPlan.yearlyMilestones.map((milestone) => (
+        {Array.isArray(visionPlan?.yearlyMilestones) && visionPlan.yearlyMilestones.map((milestone) => (
           <View key={milestone.year} style={styles.milestone}>
             <Text style={styles.text}>Year {milestone.year}:</Text>
-            {milestone.goals.map((goal, index) => (
+            {Array.isArray(milestone.goals) && milestone.goals.map((goal, index) => (
               <Text key={index} style={styles.text}>• {goal}</Text>
             ))}
           </View>
