@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useToast } from "@/hooks/use-toast";
 import VisionPlanPDF from "./VisionPlanPDF";
 import { type VisionPlan } from "@/utils/coreValues";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
@@ -27,6 +30,8 @@ const VisionPlanDisplay = ({
   traitScores,
   dominantTrait 
 }: VisionPlanDisplayProps) => {
+  const { toast } = useToast();
+  const [isGenerating, setIsGenerating] = useState(false);
   const pdfFileName = `${developmentArea.toLowerCase().replace(/\s+/g, '-')}-vision-plan.pdf`;
 
   return (
@@ -49,11 +54,44 @@ const VisionPlanDisplay = ({
           }
           fileName={pdfFileName}
         >
-          {({ loading }) => (
-            <Button disabled={loading}>
-              {loading ? "Generating PDF..." : "Download PDF"}
-            </Button>
-          )}
+          {({ loading, error }) => {
+            if (loading && !isGenerating) {
+              setIsGenerating(true);
+              toast({
+                title: "Generating PDF",
+                description: "Your PDF is being generated...",
+              });
+            }
+            
+            if (!loading && isGenerating) {
+              setIsGenerating(false);
+              toast({
+                title: "PDF Ready",
+                description: "Your PDF has been generated and is ready to download.",
+              });
+            }
+
+            if (error) {
+              toast({
+                title: "Error",
+                description: "There was an error generating your PDF. Please try again.",
+                variant: "destructive",
+              });
+            }
+
+            return (
+              <Button disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Generating PDF...
+                  </>
+                ) : (
+                  "Download PDF"
+                )}
+              </Button>
+            );
+          }}
         </PDFDownloadLink>
       </div>
 
