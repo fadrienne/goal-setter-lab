@@ -13,12 +13,22 @@ interface VisionPlannerProps {
     trait: string;
     score: number;
   };
+  traitScores: {
+    trait: string;
+    score: number;
+  }[];
   selfReflectionData: SelfReflectionFormData | null;
 }
 
 const MAX_DREAMS_LENGTH = 2000;
 
-const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfReflectionData }: VisionPlannerProps) => {
+const VisionPlanner = ({ 
+  selectedAreas, 
+  selectedValues, 
+  dominantTrait,
+  traitScores, 
+  selfReflectionData 
+}: VisionPlannerProps) => {
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -96,6 +106,8 @@ const VisionPlanner = ({ selectedAreas, selectedValues, dominantTrait, selfRefle
         onStartOver={() => setVisionPlan(null)}
         onEdit={handleEdit}
         developmentArea={selectedAreas[0]}
+        traitScores={traitScores}
+        dominantTrait={dominantTrait}
       />
     );
   }

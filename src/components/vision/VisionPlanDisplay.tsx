@@ -8,6 +8,7 @@ interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
   developmentArea: string;
   onStartOver: () => void;
+  onEdit: () => void;
   traitScores: {
     trait: string;
     score: number;
@@ -22,6 +23,7 @@ const VisionPlanDisplay = ({
   visionPlan, 
   developmentArea, 
   onStartOver,
+  onEdit,
   traitScores,
   dominantTrait 
 }: VisionPlanDisplayProps) => {
@@ -32,6 +34,9 @@ const VisionPlanDisplay = ({
       <div className="flex justify-between items-center">
         <Button onClick={onStartOver} variant="outline">
           Back to Core Values
+        </Button>
+        <Button onClick={onEdit} variant="outline">
+          Edit Vision
         </Button>
         <PDFDownloadLink
           document={
