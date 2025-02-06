@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -8,13 +7,13 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } fr
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  currentSituation: z.string().min(10, "Where are you now in your personal and professional life?"),
-  challengesOpportunities: z.string().min(10, "What are your current biggest challenges and opportunities?"),
-  attentionAreas: z.string().min(10, "Which areas of your life currently need the most attention?"),
-  workLifeIntegration: z.string().min(10, "What does an ideal work-life integration look like for you?"),
-  desiredSkills: z.string().min(10, "What skills or capabilities do you want to develop?"),
-  habits: z.string().min(10, "What habits would you like to build or break?"),
-  communityImpact: z.string().min(10, "How do you want to make a difference in your community or industry?"),
+  currentSituation: z.string().optional(),
+  challengesOpportunities: z.string().optional(),
+  attentionAreas: z.string().optional(),
+  workLifeIntegration: z.string().optional(),
+  desiredSkills: z.string().optional(),
+  habits: z.string().optional(),
+  communityImpact: z.string().optional(),
 });
 
 export type SelfReflectionFormData = z.infer<typeof formSchema>;
@@ -37,12 +36,16 @@ const SelfReflectionForm = ({ onSubmit }: SelfReflectionFormProps) => {
     },
   });
 
+  const handleSkip = () => {
+    onSubmit({});
+  };
+
   return (
     <Card className="w-full max-w-3xl mx-auto">
       <CardHeader>
         <CardTitle>Self-Reflection Questions</CardTitle>
         <CardDescription>
-          Take a moment to reflect on these questions. Your answers will help shape your personalized vision and goals.
+          Take a moment to reflect on these questions. Your answers will help shape your personalized vision and goals. All questions are optional.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -170,7 +173,12 @@ const SelfReflectionForm = ({ onSubmit }: SelfReflectionFormProps) => {
               )}
             />
 
-            <Button type="submit" className="w-full">Continue</Button>
+            <div className="flex gap-4 justify-end">
+              <Button type="button" variant="outline" onClick={handleSkip}>
+                Skip
+              </Button>
+              <Button type="submit">Continue</Button>
+            </div>
           </form>
         </Form>
       </CardContent>
