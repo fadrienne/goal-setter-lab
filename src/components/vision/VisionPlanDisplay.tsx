@@ -45,7 +45,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
 
       <Card className="bg-white shadow-lg">
         <CardHeader className="border-b bg-accent/50">
-          <CardTitle className="text-2xl text-primary">Your SMART Goal</CardTitle>
+          <CardTitle className="text-2xl text-primary">Your {developmentArea} SMART Goal</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <div className="space-y-6">
@@ -75,7 +75,7 @@ const VisionPlanDisplay = ({ visionPlan, onStartOver, onEdit, developmentArea }:
 
       <Card className="bg-white shadow-lg">
         <CardHeader className="border-b bg-accent/50">
-          <CardTitle className="text-2xl text-primary">Your 5-Year Vision</CardTitle>
+          <CardTitle className="text-2xl text-primary">Your {developmentArea} 5-Year Vision</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <p className="text-lg text-gray-700 mb-8 leading-relaxed">
