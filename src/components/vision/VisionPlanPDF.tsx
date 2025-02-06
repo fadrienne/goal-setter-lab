@@ -1,17 +1,11 @@
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
-
-// Register Montserrat font for PDF
-Font.register({
-  family: 'Montserrat',
-  src: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXp-p7K4KLg.ttf',
-});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Helvetica',
     backgroundColor: '#F0F4F8', // matches accent color
   },
   section: {
@@ -24,13 +18,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     color: '#6B4E71', // matches primary color
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
     color: '#6B4E71', // matches primary color
-    fontWeight: 'medium',
+    fontFamily: 'Helvetica-Bold',
   },
   text: {
     fontSize: 12,
