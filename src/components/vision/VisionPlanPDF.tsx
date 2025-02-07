@@ -1,30 +1,11 @@
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
-
-// Register Century Gothic font
-Font.register({
-  family: 'Century Gothic',
-  fonts: [
-    {
-      src: 'Century Gothic',
-      fontWeight: 'normal',
-    },
-    {
-      src: 'Century Gothic',
-      fontWeight: 'medium',
-    },
-    {
-      src: 'Century Gothic',
-      fontWeight: 'bold',
-    },
-  ],
-});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Century Gothic',
+    fontFamily: 'Helvetica',
     backgroundColor: '#F0F4F8', // matches accent color
   },
   section: {
@@ -37,13 +18,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     color: '#6B4E71', // matches primary color
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
     color: '#6B4E71', // matches primary color
-    fontWeight: 'medium',
+    fontFamily: 'Helvetica-Bold',
   },
   text: {
     fontSize: 12,
