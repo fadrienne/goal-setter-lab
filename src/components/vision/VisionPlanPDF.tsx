@@ -5,7 +5,7 @@ import { personalityGoals } from '@/utils/personalityGoals';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Helvetica-Light',
+    fontFamily: 'Roboto',
     backgroundColor: '#F0F4F8', // matches accent color
   },
   section: {
@@ -18,13 +18,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     color: '#6B4E71', // matches primary color
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Roboto-Bold',
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
     color: '#6B4E71', // matches primary color
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Roboto-Bold',
   },
   text: {
     fontSize: 12,
