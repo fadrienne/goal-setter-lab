@@ -19,7 +19,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
+        sans: ['"Century Gothic"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

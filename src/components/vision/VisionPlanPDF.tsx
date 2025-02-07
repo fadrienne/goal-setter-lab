@@ -2,20 +2,20 @@ import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/rendere
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
 
-// Register fonts with correct paths and formats
+// Register Century Gothic font
 Font.register({
-  family: 'Montserrat',
+  family: 'Century Gothic',
   fonts: [
     {
-      src: 'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCs16Hw5aXp-p7K4GLs.ttf',
+      src: 'Century Gothic',
       fontWeight: 'normal',
     },
     {
-      src: 'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aXp-p7K4GLs.ttf',
+      src: 'Century Gothic',
       fontWeight: 'medium',
     },
     {
-      src: 'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCuM73w5aXp-p7K4GLs.ttf',
+      src: 'Century Gothic',
       fontWeight: 'bold',
     },
   ],
@@ -24,7 +24,7 @@ Font.register({
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Century Gothic',
     backgroundColor: '#F0F4F8', // matches accent color
   },
   section: {
