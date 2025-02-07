@@ -1,11 +1,22 @@
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
+
+// Register the Montserrat font family
+Font.register({
+  family: 'Montserrat',
+  fonts: [
+    { src: '/fonts/Montserrat-Regular.ttf' },
+    { src: '/fonts/Montserrat-Medium.ttf', fontWeight: 500 },
+    { src: '/fonts/Montserrat-Bold.ttf', fontWeight: 700 },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     backgroundColor: '#F0F4F8', // matches accent color
   },
   section: {
@@ -18,13 +29,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     color: '#6B4E71', // matches primary color
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Montserrat',
+    fontWeight: 700,
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
     color: '#6B4E71', // matches primary color
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Montserrat',
+    fontWeight: 700,
   },
   text: {
     fontSize: 12,
