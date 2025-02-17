@@ -2,16 +2,32 @@
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import { type VisionPlan } from '@/utils/coreValues';
 import { personalityGoals } from '@/utils/personalityGoals';
+import { supabase } from '@/integrations/supabase/client';
+
+// Helper function to get font URLs from Supabase storage
+const getFontUrl = async (fontName: string) => {
+  const { data } = await supabase.storage.from('fonts').getPublicUrl(fontName);
+  return data.publicUrl;
+};
 
 // Register the Montserrat font family
-Font.register({
-  family: 'Montserrat',
-  fonts: [
-    { src: '/fonts/Montserrat-Regular.ttf' },
-    { src: '/fonts/Montserrat-Medium.ttf', fontWeight: 500 },
-    { src: '/fonts/Montserrat-Bold.ttf', fontWeight: 700 },
-  ],
-});
+const registerFonts = async () => {
+  const regularUrl = await getFontUrl('Montserrat-Regular.ttf');
+  const mediumUrl = await getFontUrl('Montserrat-Medium.ttf');
+  const boldUrl = await getFontUrl('Montserrat-Bold.ttf');
+
+  Font.register({
+    family: 'Montserrat',
+    fonts: [
+      { src: regularUrl },
+      { src: mediumUrl, fontWeight: 500 },
+      { src: boldUrl, fontWeight: 700 },
+    ],
+  });
+};
+
+// Call registerFonts when the component loads
+registerFonts().catch(console.error);
 
 const styles = StyleSheet.create({
   page: {
