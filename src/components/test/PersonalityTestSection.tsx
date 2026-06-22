@@ -1,26 +1,26 @@
 import { useState } from "react";
 import QuestionCard from "../QuestionCard";
-import { useQuestions } from "@/hooks/useQuestions";
+import { type Question } from "@/utils/questions/types";
 
 interface PersonalityTestSectionProps {
+  questions: Question[];
   onComplete: (answers: Record<number, number>) => void;
 }
 
-const PersonalityTestSection = ({ onComplete }: PersonalityTestSectionProps) => {
+const PersonalityTestSection = ({ questions, onComplete }: PersonalityTestSectionProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const questions = useQuestions();
 
   const handleAnswer = (value: number) => {
     if (currentQuestion >= questions.length) return;
-    
+
     const newAnswers = {
       ...answers,
       [questions[currentQuestion].id]: value,
     };
-    
+
     setAnswers(newAnswers);
-    
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {

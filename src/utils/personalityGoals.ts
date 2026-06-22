@@ -10,102 +10,102 @@ interface PersonalityGoal {
 export const personalityGoals: PersonalityGoal[] = [
   {
     trait: "extraversion",
-    title: "Social Impact & Leadership Development",
-    description: "Leverage your natural social energy to build connections and lead others.",
+    title: "Amplify Your Impact Through People and Presence",
+    description: "You gain energy from connection and shine in collaborative environments. Your superpower is rallying others — use it to lead, inspire, and create ripple effects at scale.",
     shortTermGoals: [
-      "Join or lead a professional networking group",
-      "Take on speaking opportunities",
-      "Mentor junior colleagues"
+      "Volunteer for a public-facing project or speaking slot in the next 30 days",
+      "Build a deliberate follow-up habit after networking events to turn contacts into relationships",
+      "Identify two people in your circle to actively sponsor or champion this quarter"
     ],
     longTermStrategies: [
-      "Build a strong professional network",
-      "Develop leadership presence",
-      "Create collaborative initiatives"
+      "Develop a signature talk or workshop that positions you as a recognized thought leader in your field",
+      "Build a personal board of advisors who complement your social strengths with analytical depth",
+      "Create a recurring community event or mastermind group that you convene and lead"
     ],
     developmentAreas: [
-      "Active listening skills",
-      "One-on-one relationship building",
-      "Strategic influence"
+      "Active listening — aim for 70% listening in conversations for one week and notice what shifts",
+      "Solo reflection — carve out weekly quiet time to convert outward energy into inward direction",
+      "Reading the room — practice recognizing when individual rapport outperforms group energy"
     ]
   },
   {
     trait: "agreeableness",
-    title: "Collaborative Growth & Team Harmony",
-    description: "Use your empathy and cooperation skills to build strong relationships and foster team success.",
+    title: "Lead Through Empathy and Deepen What Matters",
+    description: "Your warmth and attunement to others make you a natural connector and trusted confidant. Your next level is channeling that care into bold advocacy — for others and for yourself.",
     shortTermGoals: [
-      "Facilitate team building activities",
-      "Mediate conflicts constructively",
-      "Create inclusive team environments"
+      "Have one courageous conversation you've been avoiding — state your need or perspective clearly",
+      "Offer structured, specific feedback to a colleague instead of only encouragement",
+      "Map the three relationships most central to your goals and schedule intentional time with each"
     ],
     longTermStrategies: [
-      "Develop conflict resolution expertise",
-      "Build consensus-driven leadership skills",
-      "Foster psychological safety in teams"
+      "Develop facilitation skills to guide groups through conflict and reach consensus with authority",
+      "Build a mentorship ecosystem — both mentoring others and seeking mentors for your own growth gaps",
+      "Pursue a role where empathetic leadership is the core value-add, not a nice-to-have"
     ],
     developmentAreas: [
-      "Assertiveness in communication",
-      "Setting healthy boundaries",
-      "Decision-making confidence"
+      "Assertiveness — practice stating preferences or limits directly without over-explaining or apologizing",
+      "Strategic boundary-setting — identify which yeses are quietly depleting your most important priorities",
+      "Decision confidence — make three small decisions per week without seeking consensus first"
     ]
   },
   {
     trait: "conscientiousness",
-    title: "Strategic Excellence & Process Optimization",
-    description: "Channel your detail-oriented nature into achieving high-quality results and improving systems.",
+    title: "Execute with Precision and Build Systems That Last",
+    description: "You are defined by follow-through, high standards, and the discipline to do what others won't. Your edge is making complex things reliable — now leverage that for impact beyond yourself.",
     shortTermGoals: [
-      "Implement personal productivity systems",
-      "Create detailed action plans",
-      "Establish quality control measures"
+      "Design a weekly review ritual that tracks your top three priorities against measurable outcomes",
+      "Document one informal process in your work or life into a replicable, teachable system",
+      "Block protected time for a single high-leverage project for 30 consecutive days"
     ],
     longTermStrategies: [
-      "Develop project management expertise",
-      "Build systems thinking capabilities",
-      "Master time management"
+      "Build a reputation as the person who ships — deliver one high-visibility project end-to-end with distinction",
+      "Develop mastery in one domain through deliberate practice and pursue external recognition or credentials",
+      "Learn to hand off a defined system to others, then iterate based on the results they produce"
     ],
     developmentAreas: [
-      "Flexibility in approaches",
-      "Delegating effectively",
-      "Managing perfectionism"
+      "Flexibility — practice adjusting a plan mid-course without treating the revision as failure",
+      "Perfectionism management — define 'done' explicitly before you start, then stop when you reach it",
+      "Delegation — identify one recurring task to hand off completely this month and resist taking it back"
     ]
   },
   {
     trait: "neuroticism",
-    title: "Emotional Intelligence & Resilience Building",
-    description: "Transform emotional sensitivity into emotional intelligence and build stress management skills.",
+    title: "Transform Sensitivity Into Strength and Build Unshakeable Resilience",
+    description: "Your emotional attunement is a form of intelligence — it lets you sense what others miss. The work is regulating your nervous system so that depth becomes a superpower, not a liability.",
     shortTermGoals: [
-      "Practice daily mindfulness",
-      "Develop stress management techniques",
-      "Build emotional awareness"
+      "Establish a daily ten-minute grounding practice (breathwork, journaling, or movement) and maintain it for 21 days",
+      "Name your three most common stress triggers and write a pre-planned response to each",
+      "Build one relationship where you can process emotions openly, without fear of judgment"
     ],
     longTermStrategies: [
-      "Master emotional regulation",
-      "Develop resilience practices",
-      "Build strong support systems"
+      "Develop deep emotional literacy — learn to distinguish anxiety from excitement, frustration from signal",
+      "Build a robust support infrastructure (therapist, coach, or peer circle) before you need it under pressure",
+      "Turn emotional data into insight: journal patterns monthly and extract one actionable lesson per entry"
     ],
     developmentAreas: [
-      "Stress tolerance",
-      "Positive self-talk",
-      "Work-life balance"
+      "Distress tolerance — build a menu of go-to practices for acute stress so you have them ready before crisis",
+      "Cognitive reframing — practice questioning catastrophic self-talk with specific evidence and alternative explanations",
+      "Recovery routines — design a post-difficulty ritual that helps you reset rather than ruminate"
     ]
   },
   {
     trait: "openness",
-    title: "Innovation & Creative Leadership",
-    description: "Harness your creativity and curiosity to drive innovation and explore new possibilities.",
+    title: "Pioneer New Ideas and Build a Life That Reflects Your Full Range",
+    description: "You are energized by possibility, the collision of ideas, and the edges of what's known. Your challenge — and your growth — is directing that expansive curiosity toward outcomes that actually endure.",
     shortTermGoals: [
-      "Explore new methodologies",
-      "Lead innovation initiatives",
-      "Develop creative problem-solving skills"
+      "Pick one unexplored domain and commit to a 30-day learning sprint: a course, a book, a hands-on project",
+      "Generate ten wild ideas for a challenge you're facing, then filter ruthlessly to the top two and test one",
+      "Start a creative project with no requirement for perfection — ship something small and study what you learn"
     ],
     longTermStrategies: [
-      "Build innovation frameworks",
-      "Develop thought leadership",
-      "Create learning cultures"
+      "Build a personal innovation framework: a repeatable path from raw idea to tested prototype to delivered result",
+      "Develop a habit of synthesizing across fields — read widely, write regularly, and connect what others keep separate",
+      "Find one domain where your cross-disciplinary thinking gives you genuine edge, then invest deeply in it"
     ],
     developmentAreas: [
-      "Implementation focus",
-      "Practical application",
-      "Structure and routine"
+      "Follow-through — commit to finishing one idea per quarter before launching the next one",
+      "Prioritization — with unlimited curiosity and finite time, practice saying no to good ideas so the great ones can land",
+      "Implementation discipline — pair your creative vision with a concrete planning method that gets things actually built"
     ]
   }
 ];
