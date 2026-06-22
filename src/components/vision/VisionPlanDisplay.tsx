@@ -5,13 +5,14 @@ import { useToast } from "@/hooks/use-toast";
 import VisionPlanPDF from "./VisionPlanPDF";
 import { type VisionPlan } from "@/utils/coreValues";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Flower2 } from "lucide-react";
 
 interface VisionPlanDisplayProps {
   visionPlan: VisionPlan;
   developmentArea: string;
   onStartOver: () => void;
   onEdit: () => void;
+  onBuildBloomMap: () => void;
   traitScores: {
     trait: string;
     score: number;
@@ -22,13 +23,14 @@ interface VisionPlanDisplayProps {
   };
 }
 
-const VisionPlanDisplay = ({ 
-  visionPlan, 
-  developmentArea, 
+const VisionPlanDisplay = ({
+  visionPlan,
+  developmentArea,
   onStartOver,
   onEdit,
+  onBuildBloomMap,
   traitScores,
-  dominantTrait 
+  dominantTrait
 }: VisionPlanDisplayProps) => {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
@@ -66,7 +68,7 @@ const VisionPlanDisplay = ({
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center gap-3">
         <Button onClick={onStartOver} variant="outline">
           Back to Core Values
         </Button>
@@ -75,8 +77,8 @@ const VisionPlanDisplay = ({
         </Button>
         <PDFDownloadLink
           document={
-            <VisionPlanPDF 
-              visionPlan={visionPlan} 
+            <VisionPlanPDF
+              visionPlan={visionPlan}
               developmentArea={developmentArea}
               traitScores={traitScores}
               dominantTrait={dominantTrait}
@@ -103,6 +105,28 @@ const VisionPlanDisplay = ({
             );
           }}
         </PDFDownloadLink>
+      </div>
+
+      {/* BLOOM Map CTA */}
+      <div
+        className="rounded-xl p-6 text-center space-y-3 border-2"
+        style={{ backgroundColor: "#FAF8F8", borderColor: "#988183" }}
+      >
+        <Flower2 className="mx-auto h-8 w-8" style={{ color: "#988183" }} />
+        <h3 className="text-lg font-bold" style={{ color: "#4D4A56" }}>
+          Ready to turn your vision into a BLOOM Map?
+        </h3>
+        <p className="text-sm text-gray-600 max-w-md mx-auto">
+          The BLOOM Map Builder takes your vision deeper — five guided sections that generate a personalised, downloadable lotus-flower action map.
+        </p>
+        <Button
+          onClick={onBuildBloomMap}
+          size="lg"
+          className="font-semibold"
+          style={{ backgroundColor: "#988183" }}
+        >
+          Build Your BLOOM Map
+        </Button>
       </div>
 
       <Card className="p-6">

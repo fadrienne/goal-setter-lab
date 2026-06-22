@@ -1,2 +1,5 @@
 [functions.generate-vision]
 verify_jwt = false
+
+[functions.generate-bloom-section]
+verify_jwt = false

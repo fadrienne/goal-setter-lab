@@ -4,6 +4,7 @@ import { type VisionPlan } from "@/utils/coreValues";
 import { generateAIVision } from "@/utils/visionAI";
 import VisionPlanDisplay from "./vision/VisionPlanDisplay";
 import VisionInputSection from "./vision/VisionInputSection";
+import BloomMapBuilder from "./bloom/BloomMapBuilder";
 import { type SelfReflectionFormData } from "./vision/SelfReflectionForm";
 
 interface VisionPlannerProps {
@@ -23,18 +24,19 @@ interface VisionPlannerProps {
 
 const MAX_DREAMS_LENGTH = 2000;
 
-const VisionPlanner = ({ 
-  selectedAreas, 
-  selectedValues, 
+const VisionPlanner = ({
+  selectedAreas,
+  selectedValues,
   dominantTrait,
-  traitScores, 
+  traitScores,
   selfReflectionData,
-  onBackToCoreValues 
+  onBackToCoreValues,
 }: VisionPlannerProps) => {
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showBloomBuilder, setShowBloomBuilder] = useState(false);
   const { toast } = useToast();
 
   const handleDreamsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -61,14 +63,6 @@ const VisionPlanner = ({
     }
 
     setIsGenerating(true);
-    console.log("Starting vision plan generation with:", {
-      personalityTrait: dominantTrait.trait,
-      selectedAreas,
-      selectedValues,
-      personalDreams,
-      selfReflectionData
-    });
-
     try {
       const aiVision = await generateAIVision({
         personalityTrait: dominantTrait.trait,
@@ -77,8 +71,6 @@ const VisionPlanner = ({
         personalDreams,
         selfReflectionAnswers: selfReflectionData
       });
-      
-      console.log("Received vision plan:", aiVision);
       setVisionPlan(aiVision);
       setIsEditing(false);
       toast({
@@ -97,16 +89,25 @@ const VisionPlanner = ({
     }
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  if (showBloomBuilder && visionPlan) {
+    return (
+      <BloomMapBuilder
+        visionPlan={visionPlan}
+        dominantTrait={dominantTrait.trait}
+        coreValues={selectedValues}
+        developmentArea={selectedAreas[0]}
+        onBack={() => setShowBloomBuilder(false)}
+      />
+    );
+  }
 
   if (visionPlan && !isEditing) {
     return (
-      <VisionPlanDisplay 
-        visionPlan={visionPlan} 
+      <VisionPlanDisplay
+        visionPlan={visionPlan}
         onStartOver={onBackToCoreValues}
-        onEdit={handleEdit}
+        onEdit={() => setIsEditing(true)}
+        onBuildBloomMap={() => setShowBloomBuilder(true)}
         developmentArea={selectedAreas[0]}
         traitScores={traitScores}
         dominantTrait={dominantTrait}
