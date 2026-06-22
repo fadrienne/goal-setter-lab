@@ -12,15 +12,27 @@ interface VisionInput {
 }
 
 export const generateAIVision = async (input: VisionInput): Promise<VisionPlan> => {
-  try {
-    const { data, error } = await supabase.functions.invoke('generate-vision', {
-      body: input
-    });
+  const { data, error } = await supabase.functions.invoke('generate-vision', {
+    body: input
+  });
 
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    console.error('Error generating vision plan:', error);
-    throw error;
+  if (error) {
+    // Extract message from FunctionsHttpError body if present
+    const context = (error as { context?: Response }).context;
+    if (context) {
+      try {
+        const body = await context.json();
+        throw new Error(body.error ?? error.message);
+      } catch {
+        throw new Error(error.message);
+      }
+    }
+    throw new Error(error.message);
   }
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+
+  return data as VisionPlan;
 };
