@@ -17,7 +17,7 @@ const PersonalityTest = () => {
   const [showDevelopmentAreas, setShowDevelopmentAreas] = useState(false);
   const [showVisionPlanner, setShowVisionPlanner] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
-  const questions = useQuestions();
+  const { questions, isReady } = useQuestions();
 
   const handleTestComplete = (testAnswers: Record<number, number>) => {
     setAnswers(testAnswers);
@@ -147,7 +147,11 @@ const PersonalityTest = () => {
     );
   }
 
-  return <PersonalityTestSection onComplete={handleTestComplete} />;
+  if (!isReady) {
+    return <div className="text-center p-4">Loading questions...</div>;
+  }
+
+  return <PersonalityTestSection questions={questions} onComplete={handleTestComplete} />;
 };
 
 export default PersonalityTest;

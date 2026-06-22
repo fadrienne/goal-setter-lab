@@ -23,9 +23,19 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
-    const systemPrompt = 
+    const traitCoachingStyles: Record<string, string> = {
+      extraversion: "This person thrives on social energy, visibility, and leading others. Write goals that emphasize rallying people, creating shared momentum, and making an outward mark. Use action-oriented, energizing language (mobilize, inspire, connect, lead, amplify).",
+      agreeableness: "This person is driven by empathy, harmony, and the wellbeing of others. Write goals that centre deepening relationships, collaborative impact, and advocating with warmth. Use relational, caring language (nurture, build trust, support, strengthen bonds, co-create).",
+      conscientiousness: "This person values precision, reliability, and measurable achievement. Write goals that emphasize building systems, hitting clear targets, and delivering excellence. Use structured, outcome-focused language (execute, track, optimize, master, deliver, systemize).",
+      neuroticism: "This person has deep emotional attunement and is on a journey of building resilience. Write goals that frame emotional sensitivity as intelligence and focus on grounding, regulation, and turning inner experience into wisdom. Use empowering, grounding language (stabilize, ground, strengthen, regulate, reclaim, transform).",
+      openness: "This person is energized by curiosity, exploration, and connecting disparate ideas. Write goals that celebrate discovery, experimentation, and converting creative vision into lasting impact. Use expansive, possibility-oriented language (explore, pioneer, imagine, prototype, synthesize, create).",
+    };
+    const traitStyle = traitCoachingStyles[input.personalityTrait] ?? "Adapt the tone and goals to feel authentic to this individual's personality.";
+
+    const systemPrompt =
       `You are a top tier life coach and goals and vision planning expert helping me define a vision that feels deeply aligned with my purpose. Create a focused 5-year vision plan based on the following information, concentrating ONLY on the specified focus area:\n\n` +
       `- Personality trait: ${input.personalityTrait}\n` +
+      `- Coaching style for this personality: ${traitStyle}\n` +
       `- Focus area: ${input.selectedAreas[0]}\n` +
       `- Core values: ${input.coreValues.join(', ')}\n` +
       `- Personal dreams: ${input.personalDreams}\n\n` +
