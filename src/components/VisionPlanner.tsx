@@ -5,6 +5,8 @@ import { generateAIVision } from "@/utils/visionAI";
 import VisionPlanDisplay from "./vision/VisionPlanDisplay";
 import VisionInputSection from "./vision/VisionInputSection";
 import BloomMapBuilder from "./bloom/BloomMapBuilder";
+import AuthForm from "./auth/AuthForm";
+import { useAuth } from "@/hooks/useAuth";
 import { type SelfReflectionFormData } from "./vision/SelfReflectionForm";
 
 interface VisionPlannerProps {
@@ -32,12 +34,22 @@ const VisionPlanner = ({
   selfReflectionData,
   onBackToCoreValues,
 }: VisionPlannerProps) => {
+  const { user } = useAuth();
   const [personalDreams, setPersonalDreams] = useState("");
   const [visionPlan, setVisionPlan] = useState<VisionPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [showBloomBuilder, setShowBloomBuilder] = useState(false);
+  const [showAuthGate, setShowAuthGate] = useState(false);
   const { toast } = useToast();
+
+  const handleBuildBloomMap = () => {
+    if (user) {
+      setShowBloomBuilder(true);
+    } else {
+      setShowAuthGate(true);
+    }
+  };
 
   const handleDreamsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
@@ -89,6 +101,15 @@ const VisionPlanner = ({
     }
   };
 
+  if (showAuthGate && visionPlan) {
+    return (
+      <AuthForm
+        onSuccess={() => { setShowAuthGate(false); setShowBloomBuilder(true); }}
+        onSkip={() => { setShowAuthGate(false); setShowBloomBuilder(true); }}
+      />
+    );
+  }
+
   if (showBloomBuilder && visionPlan) {
     return (
       <BloomMapBuilder
@@ -107,7 +128,7 @@ const VisionPlanner = ({
         visionPlan={visionPlan}
         onStartOver={onBackToCoreValues}
         onEdit={() => setIsEditing(true)}
-        onBuildBloomMap={() => setShowBloomBuilder(true)}
+        onBuildBloomMap={handleBuildBloomMap}
         developmentArea={selectedAreas[0]}
         traitScores={traitScores}
         dominantTrait={dominantTrait}
