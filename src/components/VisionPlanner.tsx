@@ -91,10 +91,11 @@ const VisionPlanner = ({
       });
     } catch (error) {
       console.error("Error generating vision plan:", error);
+      const message = error instanceof Error ? error.message : "Please try again or contact support if the problem persists.";
       toast({
         variant: "destructive",
         title: "Error generating vision plan",
-        description: "Please try again or contact support if the problem persists."
+        description: message,
       });
     } finally {
       setIsGenerating(false);
